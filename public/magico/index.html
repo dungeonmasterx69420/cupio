@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#070C14">
+<title>MAGICO — Orlando Magic HQ · A Dungeon Production</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23070C14'/%3E%3Cg stroke='%234FA8E3' fill='none' stroke-width='4' stroke-linejoin='round' stroke-linecap='round'%3E%3Cpath d='M50 10 L58 38 L88 38 L64 55 L73 84 L50 66 L27 84 L36 55 L12 38 L42 38 Z' fill='%234FA8E3' fill-opacity='.18'/%3E%3Ccircle cx='50' cy='50' r='42' stroke-dasharray='6 10' stroke-width='2.5'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700;800&family=Archivo:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+/* ================================================================
+   MAGICO — hardwood-at-midnight theme (Orlando Magic blue)
+================================================================ */
+:root{
+  --court:#070C14; --panel:#0D1521; --panel-2:#0A111B;
+  --line:#1E3048; --line-soft:#162436;
+  --chalk:#EBF1F7; --dim:#8CA0B5; --faint:#5C7185;
+  --blue:#4FA8E3; --blue-deep:#2E7DB5; --silver:#C4CED8; --live:#E4574C;
+  --gold:#E3B94F;
+  --radius:10px;
+  --disp:'Saira Condensed',sans-serif;
+  --body:'Archivo',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+body{background:var(--court);color:var(--chalk);font-family:var(--body);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(1100px 480px at 70% -10%, rgba(79,168,227,.06), transparent 60%),
+    repeating-linear-gradient(90deg,transparent 0 140px,rgba(255,255,255,.012) 140px 280px)}
+a{color:var(--blue);text-decoration:none}
+a:hover{text-decoration:underline}
+a:focus-visible,button:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:4px}
+img{display:block}
+.wrap{max-width:1240px;margin:0 auto;padding:0 22px;position:relative;z-index:1}
+
+/* ---------- ticker ---------- */
+.ticker{background:#050A10;border-bottom:1px solid var(--line-soft);overflow:hidden;white-space:nowrap;position:relative}
+.ticker-label{position:absolute;left:0;top:0;bottom:0;z-index:2;display:flex;align-items:center;gap:8px;padding:0 14px;
+  background:#050A10;border-right:1px solid var(--line);
+  font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.14em;color:var(--blue)}
+.ticker-track{display:inline-flex;padding:9px 0;animation:tick 70s linear infinite;will-change:transform}
+.ticker:hover .ticker-track{animation-play-state:paused}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.tick-item{display:inline-flex;align-items:center;gap:7px;padding:0 22px;font-size:13px;color:var(--dim);border-right:1px solid var(--line-soft)}
+.tick-item b{color:var(--chalk);font-weight:600}
+.tick-score{color:var(--blue);font-family:var(--disp);font-weight:700}
+
+/* ---------- header / MAGICO logo ---------- */
+header{padding:30px 0 10px}
+.masthead{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.brand-eyebrow{display:inline-block;font-family:var(--disp);font-weight:600;font-size:13px;letter-spacing:.3em;
+  color:var(--gold);text-transform:uppercase;margin-bottom:10px}
+.brand-eyebrow:hover{color:#F3D27A;text-decoration:none}
+.logo-row{display:flex;align-items:center;gap:18px}
+.logo-mark{width:64px;height:64px;flex:none}
+.magico-word{font-family:'Press Start 2P',monospace;font-weight:400;font-size:clamp(28px,5vw,52px);line-height:1;
+  letter-spacing:.06em;margin:0;-webkit-font-smoothing:none;
+  background:linear-gradient(180deg,#8FCBF2,#3E8FC7);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 14px rgba(79,168,227,.35))}
+.logo-sub{font-family:var(--disp);font-weight:600;font-size:13px;letter-spacing:.24em;
+  color:var(--dim);text-transform:uppercase;margin-top:8px}
+.stage-chip{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:999px;padding:8px 16px;
+  font-family:var(--disp);font-size:15px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--chalk);background:var(--panel)}
+.stage-chip .dot{width:8px;height:8px;border-radius:50%;background:var(--blue);box-shadow:0 0 8px var(--blue)}
+.stage-chip.live .dot{background:var(--live);box-shadow:0 0 8px var(--live);animation:pulse 1.4s infinite}
+@keyframes pulse{50%{opacity:.35}}
+
+/* ---------- sections ---------- */
+section{padding:34px 0 6px}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:18px;border-bottom:1px solid var(--line-soft);padding-bottom:10px}
+.sec-head h2{font-family:var(--disp);font-weight:700;font-size:28px;letter-spacing:.06em;text-transform:uppercase}
+.sec-head h2 em{font-style:normal;color:var(--blue)}
+.sec-head .note{font-size:13px;color:var(--faint)}
+
+/* ---------- LIVE NOW zone ---------- */
+#livezone{display:none}
+#livezone.on{display:block}
+.live-card{border:1px solid #4a2723;border-radius:var(--radius);overflow:hidden;background:linear-gradient(165deg,#180F12,#0D1521)}
+.live-top{display:flex;align-items:center;gap:10px;padding:12px 18px;border-bottom:1px solid #3a2320;
+  font-family:var(--disp);font-weight:800;letter-spacing:.2em;font-size:14px;color:var(--live);text-transform:uppercase}
+.live-top .dot{width:9px;height:9px;border-radius:50%;background:var(--live);box-shadow:0 0 10px var(--live);animation:pulse 1.4s infinite}
+.live-main{display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center;padding:26px 20px 10px;text-align:center}
+.live-team .nm{font-family:var(--disp);font-weight:800;font-size:clamp(24px,3.6vw,40px);text-transform:uppercase;line-height:1}
+.live-team .rec{font-size:12px;color:var(--faint);margin-top:4px}
+.live-score{font-family:var(--disp);font-weight:800;font-size:clamp(44px,6vw,72px);color:var(--chalk);line-height:1}
+.live-clock{font-family:var(--disp);font-weight:700;font-size:16px;letter-spacing:.14em;color:var(--live);text-transform:uppercase;text-align:center;padding:6px 0 2px}
+.live-cta{display:flex;justify-content:center;padding:16px 0 22px}
+.btn-live{display:inline-block;background:var(--live);color:#fff;font-family:var(--disp);font-weight:800;letter-spacing:.12em;
+  text-transform:uppercase;font-size:16px;padding:12px 28px;border-radius:6px}
+.btn-live:hover{background:#c9463c;text-decoration:none}
+
+/* ---------- hero / next-up ---------- */
+.hero{border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(160deg,#0F1B2B,#0A111B);padding:30px 26px;
+  display:grid;grid-template-columns:1.4fr 1fr;gap:26px}
+.hero-tag{font-family:var(--disp);font-weight:700;font-size:14px;letter-spacing:.24em;color:var(--blue);text-transform:uppercase}
+.hero-line{margin-top:10px;font-family:var(--disp);font-weight:800;font-size:clamp(28px,4vw,46px);text-transform:uppercase;line-height:1.05}
+.hero-line .thin{font-weight:600;color:var(--dim)}
+.hero-sub{margin-top:12px;color:var(--dim);font-size:14px;max-width:56ch}
+.count{display:flex;gap:18px;justify-content:flex-end;align-items:center}
+.count .cell{text-align:center;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px 16px;min-width:82px}
+.count .num{font-family:var(--disp);font-weight:800;font-size:34px;line-height:1;color:var(--blue)}
+.count .lbl{font-size:11px;letter-spacing:.18em;color:var(--faint);text-transform:uppercase;margin-top:6px}
+.hero-foot{grid-column:1/-1;border-top:1px solid var(--line-soft);padding-top:14px;font-size:13px;color:var(--faint)}
+.hero-foot b{color:var(--silver)}
+
+/* ---------- recap band ---------- */
+.recap{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.stat-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.stat-card .big{font-family:var(--disp);font-weight:800;font-size:36px;color:var(--blue);line-height:1}
+.stat-card .lbl{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-top:8px}
+.stat-card .sub{font-size:13px;color:var(--dim);margin-top:6px}
+.story{margin-top:16px;background:var(--panel-2);border:1px solid var(--line-soft);border-radius:var(--radius);padding:20px 22px;color:var(--dim);font-size:14.5px}
+.story b{color:var(--chalk)}
+.story .hl{color:var(--blue)}
+
+/* ---------- roster ---------- */
+.roster-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.pcard{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;position:relative;overflow:hidden}
+.pcard.core{border-color:var(--blue-deep);background:linear-gradient(160deg,#10202F,#0A111B)}
+.pcard .num{position:absolute;right:12px;top:6px;font-family:var(--disp);font-weight:800;font-size:44px;color:rgba(79,168,227,.13);line-height:1}
+.pcard .pos{font-family:var(--disp);font-weight:700;font-size:12px;letter-spacing:.18em;color:var(--faint);text-transform:uppercase}
+.pcard .nm{font-family:var(--disp);font-weight:800;font-size:22px;text-transform:uppercase;margin-top:2px}
+.pcard .nm a{color:var(--chalk);border-bottom:1px dotted var(--blue-deep)}
+.pcard .nm a:hover{color:var(--blue);text-decoration:none}
+.pcard .meta{font-size:12.5px;color:var(--faint);margin-top:4px}
+.pcard .line{font-size:13px;color:var(--dim);margin-top:8px;border-left:2px solid var(--blue-deep);padding-left:10px}
+.pcard .tag{display:inline-block;margin-top:10px;font-family:var(--disp);font-weight:700;font-size:11px;letter-spacing:.14em;
+  text-transform:uppercase;border:1px solid var(--line);border-radius:4px;padding:2px 8px;color:var(--silver)}
+.pcard .tag.rk{color:var(--gold);border-color:#4a3d1e}
+.pcard .tag.inj{color:var(--live);border-color:#4a2723}
+
+/* ---------- schedule ---------- */
+.fx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.fx{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:14px 16px}
+.fx-when{display:flex;justify-content:space-between;font-size:12.5px;color:var(--faint);margin-bottom:10px}
+.fx-when b{color:var(--blue);font-weight:600}
+.status-pill{font-family:var(--disp);font-weight:700;font-size:12px;letter-spacing:.1em;border-radius:4px;padding:1px 8px}
+.status-pill.live{color:#fff;background:var(--live)}
+.status-pill.ft{color:var(--court);background:var(--blue)}
+.status-pill.sch{color:var(--dim);border:1px solid var(--line)}
+.fx-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:3px 0}
+.fx-row .tn{font-family:var(--disp);font-weight:700;font-size:20px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.fx-row .tn.win{color:var(--blue)}
+.fx-row .sc{font-family:var(--disp);font-weight:800;font-size:24px;min-width:34px;text-align:right}
+.fx-venue{font-size:12px;color:var(--faint);margin-top:8px}
+.sched-note{background:var(--panel-2);border:1px dashed var(--line);border-radius:var(--radius);padding:18px 20px;color:var(--dim);font-size:14px;margin-bottom:16px}
+.sched-note b{color:var(--chalk)}
+
+/* ---------- offseason tracker ---------- */
+.moves{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.move{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px}
+.move .kind{font-family:var(--disp);font-weight:700;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue)}
+.move .kind.out{color:var(--live)}
+.move .kind.fa{color:var(--gold)}
+.move h3{font-family:var(--disp);font-weight:800;font-size:20px;text-transform:uppercase;margin-top:4px}
+.move p{font-size:13.5px;color:var(--dim);margin-top:6px}
+
+/* ---------- dungeon strip ---------- */
+.dstrip{margin:44px 0 0;border:1px solid #3d4c28;border-radius:var(--radius);
+  background:linear-gradient(150deg,#141a0e,#0A111B);padding:26px 26px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.dstrip h3{font-family:var(--disp);font-weight:800;font-size:clamp(20px,3vw,30px);text-transform:uppercase;letter-spacing:.04em}
+.dstrip h3 em{font-style:normal;color:var(--gold)}
+.dstrip p{color:var(--dim);font-size:14px;margin-top:6px;max-width:60ch}
+.btn-d{display:inline-block;background:var(--gold);color:#141a0e;font-family:var(--disp);font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;font-size:15px;padding:12px 24px;border-radius:6px;white-space:nowrap}
+.btn-d:hover{background:#f0ca66;text-decoration:none}
+
+footer{margin-top:40px;border-top:1px solid var(--line-soft);padding:22px 0 34px;font-size:12.5px;color:var(--faint);
+  display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+footer a{color:var(--dim)}
+#src-chip{font-family:var(--disp);letter-spacing:.08em;text-transform:uppercase}
+
+@media (max-width:820px){
+  .hero{grid-template-columns:1fr}
+  .count{justify-content:flex-start}
+  .recap{grid-template-columns:repeat(2,1fr)}
+  .magico-word{font-size:24px}
+  .logo-mark{width:48px;height:48px}
+  .masthead{align-items:flex-start;flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ ticker ============ -->
+<div class="ticker" aria-label="Orlando Magic headlines">
+  <div class="ticker-label"><span>⭐</span> MAGIC WIRE</div>
+  <div class="ticker-track" id="ticker"></div>
+</div>
+
+<!-- ============ header ============ -->
+<header class="wrap">
+  <a class="brand-eyebrow" href="https://enterdungeon.cc" target="_blank" rel="noopener">⚔ A Dungeon Production</a>
+  <div class="masthead">
+    <div class="logo-row">
+      <svg class="logo-mark" viewBox="0 0 100 100" role="img" aria-label="Magico star mark">
+        <defs>
+          <filter id="mglow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="2.6" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <linearGradient id="mblue" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#8FCBF2"/><stop offset="1" stop-color="#2E7DB5"/>
+          </linearGradient>
+        </defs>
+        <g filter="url(#mglow)" stroke="url(#mblue)" fill="none" stroke-width="3" stroke-linejoin="round" stroke-linecap="round">
+          <path d="M50 10 L58 38 L88 38 L64 55 L73 84 L50 66 L27 84 L36 55 L12 38 L42 38 Z" fill="rgba(79,168,227,.14)"/>
+          <circle cx="50" cy="50" r="43" stroke-dasharray="5 11" stroke-width="2.2"/>
+        </g>
+      </svg>
+      <div class="logo-text">
+        <h1 class="magico-word">MAGICO</h1>
+        <div class="logo-sub">Orlando Magic HQ · Kia Center · Est. 1989</div>
+      </div>
+    </div>
+    <div class="stage-chip" id="chip"><span class="dot" aria-hidden="true"></span> <span id="chiptext">Offseason · 2026</span></div>
+  </div>
+</header>
+
+<!-- ============ LIVE NOW ============ -->
+<section id="livezone" class="wrap">
+  <div class="live-card">
+    <div class="live-top"><span class="dot"></span> LIVE NOW — MAGIC BASKETBALL</div>
+    <div class="live-main">
+      <div class="live-team"><div class="nm" id="lv-away">—</div><div class="rec" id="lv-away-rec"></div></div>
+      <div class="live-score"><span id="lv-as">0</span> – <span id="lv-hs">0</span></div>
+      <div class="live-team"><div class="nm" id="lv-home">—</div><div class="rec" id="lv-home-rec"></div></div>
+    </div>
+    <div class="live-clock" id="lv-clock">—</div>
+    <div class="live-cta"><a class="btn-live" href="https://enterdungeon.cc" target="_blank" rel="noopener">⚔ Watch live on The Dungeon</a></div>
+  </div>
+</section>
+
+<!-- ============ hero / next up ============ -->
+<section class="wrap">
+  <div class="hero">
+    <div>
+      <div class="hero-tag" id="hero-tag">Next up</div>
+      <div class="hero-line" id="hero-line">Opening Night <span class="thin">2026–27</span></div>
+      <div class="hero-sub" id="hero-sub">
+        The 2026–27 schedule drops in mid-August. New head coach Sean Sweeney takes over a core of
+        Paolo Banchero, Franz Wagner, Desmond Bane and Jalen Suggs with unfinished playoff business.
+      </div>
+    </div>
+    <div class="count" id="countdown" aria-label="Countdown to opening night">
+      <div class="cell"><div class="num" id="cd-d">—</div><div class="lbl">Days</div></div>
+      <div class="cell"><div class="num" id="cd-h">—</div><div class="lbl">Hours</div></div>
+      <div class="cell"><div class="num" id="cd-m">—</div><div class="lbl">Min</div></div>
+    </div>
+    <div class="hero-foot" id="hero-foot"><b>≈ Oct 20, 2026</b> · estimated tip-off of the NBA season — exact Magic opener confirmed when the league schedule is released.</div>
+  </div>
+</section>
+
+<!-- ============ last season recap ============ -->
+<section class="wrap" id="recap">
+  <div class="sec-head"><h2>2025–26 <em>Recap</em></h2><div class="note">how last season ended</div></div>
+  <div class="recap">
+    <div class="stat-card"><div class="big">45–37</div><div class="lbl">Regular Season</div><div class="sub">8th in the East · via the play-in</div></div>
+    <div class="stat-card"><div class="big">3–4</div><div class="lbl">Playoffs · Rd 1</div><div class="sub">Lost to #1 Detroit after leading 3–1</div></div>
+    <div class="stat-card"><div class="big">NBA Cup</div><div class="lbl">Semifinalist</div><div class="sub">4–0 in East Group B · beat Miami in the QF</div></div>
+    <div class="stat-card"><div class="big">11th</div><div class="lbl">Defensive Rating</div><div class="sub">114.3 DRtg · offense 19th (114.9)</div></div>
+  </div>
+  <div class="story">
+    <b>The season in one paragraph:</b> Orlando went <span class="hl">45–37</span>, tied Philadelphia but lost the tiebreaker,
+    dropped the 7/8 play-in game, then beat Charlotte to claim the <span class="hl">8 seed</span> — a third straight playoff trip.
+    They shocked top-seeded Detroit by going up <span class="hl">3–1</span>, then it unraveled: a 24-point lead evaporated in Game 6
+    behind 23 straight missed shots, and Game 7 ended 116–94 in Detroit. Jamahl Mosley was let go days later;
+    ex-Spurs assistant <span class="hl">Sean Sweeney</span> now runs the bench. The mandate for 2026–27 is simple — finish.
+  </div>
+</section>
+
+<!-- ============ roster ============ -->
+<section class="wrap" id="roster-sec">
+  <div class="sec-head"><h2>The <em>Roster</em></h2><div class="note" id="roster-note">2026–27 squad · updates live from the feed</div></div>
+  <div class="roster-grid" id="roster"></div>
+</section>
+
+<!-- ============ offseason tracker ============ -->
+<section class="wrap">
+  <div class="sec-head"><h2>Offseason <em>Tracker</em></h2><div class="note">summer 2026 moves</div></div>
+  <div class="moves">
+    <div class="move"><div class="kind">Coaching</div><h3>Sean Sweeney hired</h3><p>Ex-Spurs assistant and defensive specialist replaces Jamahl Mosley, who was dismissed after the first-round collapse against Detroit.</p></div>
+    <div class="move"><div class="kind out">Waived</div><h3>Jonathan Isaac</h3><p>Waived July 4, saving roughly $6.5M. Ends an injury-marred eight-year run in Orlando.</p></div>
+    <div class="move"><div class="kind">Draft</div><h3>Izaiyah Nelson · #46</h3><p>Orlando's lone pick in the 2026 draft, added on a second-round scale deal to a young frontcourt pipeline.</p></div>
+    <div class="move"><div class="kind fa">Free Agents</div><h3>Four pending</h3><p>Moritz Wagner, Jett Howard and Jevon Carter unrestricted; Colin Castleton restricted. Backup center is the open question.</p></div>
+  </div>
+</section>
+
+<!-- ============ schedule / results ============ -->
+<section class="wrap" id="sched-sec">
+  <div class="sec-head"><h2>Schedule <em>&amp; Results</em></h2><div class="note" id="sched-note-inline">live from the feed</div></div>
+  <div class="sched-note" id="sched-note"><b>2026–27 schedule not yet released.</b> The NBA publishes the full slate in mid-August — this board will populate automatically the moment it appears in the feed. Until then, the final stretch of 2025–26 is shown below.</div>
+  <div class="fx-grid" id="fixtures"></div>
+</section>
+
+<!-- ============ dungeon strip ============ -->
+<div class="wrap">
+  <div class="dstrip">
+    <div>
+      <h3>Every game. One place. <em>The Dungeon.</em></h3>
+      <p>Private, invite-only streaming — Magic basketball, live TV and more, all under one roof. Request access and never miss a tip-off.</p>
+    </div>
+    <a class="btn-d" href="https://enterdungeon.cc" target="_blank" rel="noopener">⚔ Request Access</a>
+  </div>
+</div>
+
+<footer class="wrap">
+  <div>MAGICO · an unofficial Orlando Magic fan dashboard · <a href="https://enterdungeon.cc" target="_blank" rel="noopener">A Dungeon Production</a></div>
+  <div id="src-chip">source: snapshot</div>
+</footer>
+
+<script>
+/* ================================================================
+   MAGICO client
+   - polls /api/magic every 60s
+   - seeded snapshot below keeps the page alive if the feed is down
+================================================================ */
+const $ = id => document.getElementById(id);
+const gs = n => 'https://www.google.com/search?q=' + encodeURIComponent(n + ' Orlando Magic');
+
+/* ---------- seeded snapshot (as of July 4, 2026) ---------- */
+const SNAPSHOT = {
+  roster: [
+    {name:'Paolo Banchero', jersey:'5', pos:'PF', core:true,  line:'22.2 pts · 8.4 reb · 5.2 ast in ’25–26 — career-high 45.9 FG%', tag:'Franchise'},
+    {name:'Franz Wagner', jersey:'22', pos:'SF', core:true,  line:'Team-leading ≈23 ppg before a late-season calf injury', tag:'Co-star'},
+    {name:'Desmond Bane', jersey:'3', pos:'SG', core:true,  line:'≈19 pts · 4.5 ast · 56% TS — the shotmaker Orlando traded for', tag:'Sniper'},
+    {name:'Jalen Suggs', jersey:'4', pos:'PG', core:true,  line:'≈15 ppg · point-of-attack menace on the league’s 11th defense', tag:'Defense'},
+    {name:'Wendell Carter Jr.', jersey:'34', pos:'C', line:'≈12 ppg anchor in the middle · $18.1M in 2026–27', tag:'Starter'},
+    {name:'Anthony Black', jersey:'0', pos:'G', line:'≈13 ppg in a breakout third year off the bench', tag:'Rising'},
+    {name:'Goga Bitadze', jersey:'35', pos:'C', line:'Backup five entering the final year of his deal', tag:'Depth'},
+    {name:'Tristan da Silva', jersey:'23', pos:'F', line:'Spot starter whenever the stars sat — steady two-way wing', tag:'Depth'},
+    {name:'Jase Richardson', pos:'G', line:'2025 first-rounder (#25) · second-year guard', tag:'Rising'},
+    {name:'Noah Penda', pos:'F', line:'2025 second-rounder (#32) · French forward, year two', tag:'Rising'},
+    {name:'Jamal Cain', pos:'F', line:'$2.6M team option · energy wing', tag:'Depth'},
+    {name:'Izaiyah Nelson', pos:'C', line:'2026 draft pick, #46 overall · second-round scale deal', tag:'Rookie', rk:true}
+  ],
+  results: [
+    {d:'May 4',  comp:'Playoffs · Gm 7', a:'Magic', as:94,  h:'Pistons', hs:116, win:false, v:'Little Caesars Arena'},
+    {d:'May 2',  comp:'Playoffs · Gm 6', a:'Pistons', as:93, h:'Magic',  hs:79,  win:false, v:'Kia Center'},
+    {d:'Apr 29', comp:'Playoffs · Gm 5', a:'Magic', as:100, h:'Pistons', hs:112, win:false, v:'Little Caesars Arena'},
+    {d:'Apr 15', comp:'Play-In · 8 seed', a:'Hornets', as:0, h:'Magic', hs:0, win:true, v:'Kia Center', note:'W — clinched the 8 seed'},
+    {d:'Apr 12', comp:'Reg. season finale', a:'Magic', as:0, h:'—', hs:0, win:true, v:'45–37 · 8th in the East', note:'Record locked'}
+  ],
+  ticker: [
+    ['Jul 4','Jonathan Isaac waived — saves ≈$6.5M'],
+    ['Jun 30','Free agency opens: Moe Wagner, Howard, Carter unrestricted'],
+    ['Jun 24','Draft: Izaiyah Nelson selected #46 overall'],
+    ['Jun 10','Sean Sweeney named head coach'],
+    ['May 4','Season ends: Pistons take Gm 7, 116–94'],
+    ['May 2','Gm 6 collapse — 24-pt lead gone, 23 straight misses'],
+    ['Apr','Up 3–1 on the #1 seed before the wheels came off'],
+    ['Dec','NBA Cup semifinal run — 4–0 in Group B, beat Miami in the QF']
+  ]
+};
+
+/* ---------- ticker ---------- */
+function renderTicker(items){
+  const half = items.map(([d,t]) =>
+    `<span class="tick-item"><span class="tick-score">${d}</span> <b>${t}</b></span>`).join('');
+  $('ticker').innerHTML = half + half; // duplicate for seamless loop
+}
+
+/* ---------- roster ---------- */
+function renderRosterSnapshot(){
+  $('roster').innerHTML = SNAPSHOT.roster.map(p => `
+    <div class="pcard${p.core ? ' core' : ''}">
+      ${p.jersey ? `<div class="num">${p.jersey}</div>` : ''}
+      <div class="pos">${p.pos}${p.jersey ? ' · #' + p.jersey : ''}</div>
+      <div class="nm"><a href="${gs(p.name)}" target="_blank" rel="noopener">${p.name}</a></div>
+      <div class="line">${p.line}</div>
+      <span class="tag${p.rk ? ' rk' : ''}">${p.tag}</span>
+    </div>`).join('');
+}
+function renderRosterLive(list){
+  if (!list || !list.length) return;
+  const seed = {}; SNAPSHOT.roster.forEach(p => seed[p.name.toLowerCase()] = p);
+  $('roster').innerHTML = list.map(p => {
+    const s = seed[(p.name||'').toLowerCase()] || {};
+    const meta = [p.height, p.weight, p.age ? 'age ' + p.age : '', p.exp != null ? (p.exp === 0 ? 'Rookie' : p.exp + ' yrs exp') : '']
+      .filter(Boolean).join(' · ');
+    return `
+    <div class="pcard${s.core ? ' core' : ''}">
+      ${p.jersey ? `<div class="num">${p.jersey}</div>` : ''}
+      <div class="pos">${p.pos || ''}${p.jersey ? ' · #' + p.jersey : ''}</div>
+      <div class="nm"><a href="${gs(p.name)}" target="_blank" rel="noopener">${p.name}</a></div>
+      <div class="meta">${meta}</div>
+      ${s.line ? `<div class="line">${s.line}</div>` : ''}
+      ${p.injured ? '<span class="tag inj">Injured</span>' : s.tag ? `<span class="tag${s.rk ? ' rk' : ''}">${s.tag}</span>` : ''}
+    </div>`;
+  }).join('');
+  $('roster-note').textContent = '2026–27 squad · live from the feed';
+}
+
+/* ---------- schedule ---------- */
+const fmtDate = iso => new Date(iso).toLocaleDateString([], {month:'short', day:'numeric'});
+const fmtTime = iso => new Date(iso).toLocaleTimeString([], {hour:'numeric', minute:'2-digit'});
+
+function renderResultsSnapshot(){
+  $('fixtures').innerHTML = SNAPSHOT.results.map(r => `
+    <div class="fx">
+      <div class="fx-when"><span><b>${r.d}</b> · ${r.comp}</span><span class="status-pill ft">FT</span></div>
+      ${r.note ? `<div class="fx-row"><span class="tn ${r.win?'win':''}">${r.note}</span></div>` :
+      `<div class="fx-row"><span class="tn ${!r.win && r.hs>r.as ? '' : ''}">${r.a}</span><span class="sc">${r.as||''}</span></div>
+       <div class="fx-row"><span class="tn">${r.h}</span><span class="sc">${r.hs||''}</span></div>`}
+      <div class="fx-venue">${r.v}</div>
+    </div>`).join('');
+}
+function renderScheduleLive(events){
+  if (!events || !events.length) return;
+  // future games first if any exist, else most recent results
+  const future = events.filter(e => e.status === 'SCHEDULED');
+  const past = events.filter(e => e.status === 'FINISHED').slice(-6).reverse();
+  const show = future.length ? future.slice(0, 12) : past;
+  if (!show.length) return;
+  if (future.length) $('sched-note').style.display = 'none';
+  $('fixtures').innerHTML = show.map(e => {
+    const pill = e.status === 'LIVE' ? '<span class="status-pill live">LIVE</span>'
+      : e.status === 'FINISHED' ? '<span class="status-pill ft">FT</span>'
+      : `<span class="status-pill sch">${fmtTime(e.date)}</span>`;
+    const row = (t, other) => {
+      const win = e.status === 'FINISHED' && t.score != null && other.score != null && t.score > other.score;
+      return `<div class="fx-row"><span class="tn ${win?'win':''}">${t.name}</span><span class="sc">${t.score != null ? t.score : ''}</span></div>`;
+    };
+    return `
+    <div class="fx">
+      <div class="fx-when"><span><b>${fmtDate(e.date)}</b>${e.broadcast ? ' · ' + e.broadcast : ''}</span>${pill}</div>
+      ${row(e.away, e.home)}${row(e.home, e.away)}
+      <div class="fx-venue">${e.venue || ''}</div>
+    </div>`;
+  }).join('');
+  $('sched-note-inline').textContent = future.length ? 'upcoming · live from the feed' : 'recent results · live from the feed';
+}
+
+/* ---------- live zone ---------- */
+function renderLive(g){
+  const zone = $('livezone');
+  if (!g || g.status !== 'LIVE'){ zone.classList.remove('on'); return; }
+  zone.classList.add('on');
+  $('lv-away').textContent = g.away.name; $('lv-home').textContent = g.home.name;
+  $('lv-as').textContent = g.away.score != null ? g.away.score : 0;
+  $('lv-hs').textContent = g.home.score != null ? g.home.score : 0;
+  $('lv-away-rec').textContent = g.away.record || ''; $('lv-home-rec').textContent = g.home.record || '';
+  $('lv-clock').textContent = (g.period ? 'Q' + g.period + ' · ' : '') + (g.clock || g.detail || '');
+  $('chiptext').textContent = 'LIVE — Magic in play';
+  $('chip').classList.add('live');
+}
+
+/* ---------- hero: next game or opening-night countdown ---------- */
+const OPENING = new Date('2026-10-20T23:00:00Z'); // ≈ estimated tip of 2026–27
+let countTarget = OPENING;
+function renderHero(team){
+  const next = team && team.nextEvent;
+  if (next && next.status === 'SCHEDULED'){
+    countTarget = new Date(next.date);
+    $('hero-tag').textContent = 'Next game';
+    $('hero-line').innerHTML = `${next.away.name} <span class="thin">at</span> ${next.home.name}`;
+    $('hero-sub').textContent = (next.venue ? next.venue + ' · ' : '') + new Date(next.date).toLocaleString([], {weekday:'long', month:'long', day:'numeric', hour:'numeric', minute:'2-digit'});
+    $('hero-foot').innerHTML = `<b>${next.broadcast || 'Broadcast TBA'}</b> · or catch it on <a href="https://enterdungeon.cc" target="_blank" rel="noopener">The Dungeon</a>.`;
+  }
+  if (team && team.record){
+    $('chiptext').textContent = team.record + (team.standing ? ' · ' + team.standing.replace('Eastern Conference','East') : '');
+  }
+}
+function tickCountdown(){
+  const ms = countTarget - Date.now();
+  if (ms <= 0){ $('cd-d').textContent = $('cd-h').textContent = $('cd-m').textContent = '0'; return; }
+  $('cd-d').textContent = Math.floor(ms / 864e5);
+  $('cd-h').textContent = Math.floor(ms % 864e5 / 36e5);
+  $('cd-m').textContent = Math.floor(ms % 36e5 / 6e4);
+}
+
+/* ---------- poll loop ---------- */
+async function refresh(){
+  try{
+    const r = await fetch('/api/magic', {cache:'no-store'});
+    const j = await r.json();
+    if (j.source === 'none') throw new Error('no provider');
+    renderRosterLive(j.roster);
+    renderScheduleLive(j.schedule);
+    renderLive(j.live);
+    renderHero(j.team);
+    $('src-chip').textContent = 'source: ' + j.source + ' · updated ' + new Date(j.fetchedAt).toLocaleTimeString([], {hour:'numeric', minute:'2-digit'});
+  }catch(e){
+    $('src-chip').textContent = 'source: snapshot (feed unavailable)';
+  }
+}
+
+/* ---------- boot ---------- */
+renderTicker(SNAPSHOT.ticker);
+renderRosterSnapshot();
+renderResultsSnapshot();
+tickCountdown();
+setInterval(tickCountdown, 30 * 1000);
+refresh();
+setInterval(refresh, 60 * 1000);
+</script>
+</body>
+</html>

@@ -1,7 +1,7 @@
 {
-  "name": "wc26-dashboard",
-  "version": "2.3.0",
-  "description": "Self-hosted FIFA World Cup 2026 live dashboard",
+  "name": "dungeon-dashboards",
+  "version": "3.0.0",
+  "description": "CUPIO (World Cup 26) + MAGICO (Orlando Magic) on one Render service — A Dungeon Production",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
