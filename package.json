@@ -1,0 +1,15 @@
+{
+  "name": "wc26-dashboard",
+  "version": "2.0.0",
+  "description": "Self-hosted FIFA World Cup 2026 live dashboard",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
