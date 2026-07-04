@@ -110,7 +110,30 @@ section{padding:34px 0 6px}
 .hero-foot{grid-column:1/-1;border-top:1px solid var(--line-soft);padding-top:14px;font-size:13px;color:var(--faint)}
 .hero-foot b{color:var(--silver)}
 
-/* ---------- recap band ---------- */
+/* ---------- player spotlight ---------- */
+.spot-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.spot{background:linear-gradient(165deg,#10202F,#0A111B);border:1px solid var(--blue-deep);border-radius:var(--radius);
+  padding:20px 16px 18px;text-align:center;position:relative;overflow:hidden;transition:transform .15s,box-shadow .2s}
+.spot:hover{transform:translateY(-3px);box-shadow:0 8px 26px rgba(0,0,0,.45),0 0 20px rgba(79,168,227,.15)}
+.spot .bignum{position:absolute;right:8px;top:2px;font-family:var(--disp);font-weight:800;font-size:64px;color:rgba(79,168,227,.10);line-height:1;pointer-events:none}
+.ava{width:92px;height:92px;border-radius:50%;margin:0 auto;position:relative;background:#152638;border:2px solid var(--blue-deep);
+  box-shadow:0 0 0 3px rgba(79,168,227,.12),0 0 18px rgba(79,168,227,.18);overflow:hidden;
+  display:flex;align-items:center;justify-content:center}
+.ava .init{font-family:var(--disp);font-weight:800;font-size:30px;color:var(--blue);letter-spacing:.02em}
+.ava img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top}
+.spot .jchip{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-family:var(--disp);font-weight:700;font-size:12px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.spot .jchip .no{color:var(--blue);font-size:15px}
+.spot .pname{margin-top:4px;font-family:var(--disp);font-weight:800;font-size:22px;text-transform:uppercase;line-height:1.1}
+.spot .pname a{color:var(--chalk);border-bottom:1px dotted var(--blue-deep)}
+.spot .pname a:hover{color:var(--blue);text-decoration:none}
+.spot .pline{font-size:12.5px;color:var(--dim);margin-top:8px;line-height:1.45}
+.ava.sm{width:52px;height:52px;margin:0;flex:none;box-shadow:none;border-width:1.5px}
+.ava.sm .init{font-size:18px}
+.pcard-top{display:flex;align-items:center;gap:14px}
+@media (max-width:820px){.spot-strip{grid-template-columns:repeat(2,1fr)}}
+
+
 .recap{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
 .stat-card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
 .stat-card .big{font-family:var(--disp);font-weight:800;font-size:36px;color:var(--blue);line-height:1}
@@ -258,6 +281,12 @@ footer a{color:var(--dim)}
   </div>
 </section>
 
+<!-- ============ player spotlight ============ -->
+<section class="wrap" id="spot-sec">
+  <div class="sec-head"><h2>Names to <em>Watch</em></h2><div class="note" id="spot-note">the core four · photos &amp; profiles hydrate from the feed</div></div>
+  <div class="spot-strip" id="spotlight"></div>
+</section>
+
 <!-- ============ last season recap ============ -->
 <section class="wrap" id="recap">
   <div class="sec-head"><h2>2025–26 <em>Recap</em></h2><div class="note">how last season ended</div></div>
@@ -367,19 +396,52 @@ function renderTicker(items){
   $('ticker').innerHTML = half + half; // duplicate for seamless loop
 }
 
+/* ---------- avatars & spotlight ---------- */
+const initials = n => n.split(/\s+/).map(w => w[0]).slice(0,2).join('').toUpperCase();
+function avatar(p, sm){
+  return `<div class="ava${sm?' sm':''}"><span class="init">${initials(p.name)}</span>${p.headshot ? `<img src="${p.headshot}" alt="${p.name}" loading="lazy" onerror="this.remove()">` : ''}</div>`;
+}
+const CORE = ['Paolo Banchero','Franz Wagner','Desmond Bane','Jalen Suggs'];
+let liveRosterByName = {};
+
+function renderSpotlight(){
+  const seed = {}; SNAPSHOT.roster.forEach(p => seed[p.name] = p);
+  $('spotlight').innerHTML = CORE.map(name => {
+    const s = seed[name] || {name};
+    const lv = liveRosterByName[name.toLowerCase()] || {};
+    const p = { name, jersey: lv.jersey || s.jersey, pos: lv.pos || s.pos,
+                headshot: lv.headshot || null, profile: lv.profile || null, line: s.line || '' };
+    return `
+    <div class="spot">
+      ${p.jersey ? `<div class="bignum">${p.jersey}</div>` : ''}
+      ${avatar(p)}
+      <div class="jchip">${p.jersey ? `<span class="no">#${p.jersey}</span> ·` : ''} ${p.pos || ''}</div>
+      <div class="pname"><a href="${p.profile || gs(p.name)}" target="_blank" rel="noopener">${p.name}</a></div>
+      <div class="pline">${p.line}</div>
+    </div>`;
+  }).join('');
+}
+
 /* ---------- roster ---------- */
 function renderRosterSnapshot(){
   $('roster').innerHTML = SNAPSHOT.roster.map(p => `
     <div class="pcard${p.core ? ' core' : ''}">
       ${p.jersey ? `<div class="num">${p.jersey}</div>` : ''}
-      <div class="pos">${p.pos}${p.jersey ? ' · #' + p.jersey : ''}</div>
-      <div class="nm"><a href="${gs(p.name)}" target="_blank" rel="noopener">${p.name}</a></div>
+      <div class="pcard-top">
+        ${avatar(p, true)}
+        <div>
+          <div class="pos">${p.pos}${p.jersey ? ' · #' + p.jersey : ''}</div>
+          <div class="nm"><a href="${gs(p.name)}" target="_blank" rel="noopener">${p.name}</a></div>
+        </div>
+      </div>
       <div class="line">${p.line}</div>
       <span class="tag${p.rk ? ' rk' : ''}">${p.tag}</span>
     </div>`).join('');
 }
 function renderRosterLive(list){
   if (!list || !list.length) return;
+  liveRosterByName = {};
+  list.forEach(p => liveRosterByName[(p.name||'').toLowerCase()] = p);
   const seed = {}; SNAPSHOT.roster.forEach(p => seed[p.name.toLowerCase()] = p);
   $('roster').innerHTML = list.map(p => {
     const s = seed[(p.name||'').toLowerCase()] || {};
@@ -388,14 +450,20 @@ function renderRosterLive(list){
     return `
     <div class="pcard${s.core ? ' core' : ''}">
       ${p.jersey ? `<div class="num">${p.jersey}</div>` : ''}
-      <div class="pos">${p.pos || ''}${p.jersey ? ' · #' + p.jersey : ''}</div>
-      <div class="nm"><a href="${gs(p.name)}" target="_blank" rel="noopener">${p.name}</a></div>
+      <div class="pcard-top">
+        ${avatar(p, true)}
+        <div>
+          <div class="pos">${p.pos || ''}${p.jersey ? ' · #' + p.jersey : ''}</div>
+          <div class="nm"><a href="${p.profile || gs(p.name)}" target="_blank" rel="noopener">${p.name}</a></div>
+        </div>
+      </div>
       <div class="meta">${meta}</div>
       ${s.line ? `<div class="line">${s.line}</div>` : ''}
       ${p.injured ? '<span class="tag inj">Injured</span>' : s.tag ? `<span class="tag${s.rk ? ' rk' : ''}">${s.tag}</span>` : ''}
     </div>`;
   }).join('');
   $('roster-note').textContent = '2026–27 squad · live from the feed';
+  renderSpotlight(); // re-render with photos + profile links now available
 }
 
 /* ---------- schedule ---------- */
@@ -450,6 +518,7 @@ function renderLive(g){
   $('lv-clock').textContent = (g.period ? 'Q' + g.period + ' · ' : '') + (g.clock || g.detail || '');
   $('chiptext').textContent = 'LIVE — Magic in play';
   $('chip').classList.add('live');
+  $('spot-note').textContent = 'on the floor right now — ' + g.away.name + ' at ' + g.home.name;
 }
 
 /* ---------- hero: next game or opening-night countdown ---------- */
@@ -495,6 +564,7 @@ async function refresh(){
 /* ---------- boot ---------- */
 renderTicker(SNAPSHOT.ticker);
 renderRosterSnapshot();
+renderSpotlight();
 renderResultsSnapshot();
 tickCountdown();
 setInterval(tickCountdown, 30 * 1000);

@@ -102,6 +102,25 @@ section{padding:34px 0 6px}
 .count .num{font-family:var(--disp);font-weight:800;font-size:34px;line-height:1;color:var(--gold)}
 .count .lbl{font-size:11px;letter-spacing:.18em;color:var(--faint);text-transform:uppercase}
 .hero-stars{font-size:13px;color:var(--dim);border-left:2px solid var(--gold-deep);padding-left:10px;margin-top:14px}
+/* ---------- stars on the pitch ---------- */
+.spot-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.spot{background:linear-gradient(165deg,#221B0D,#141310);border:1px solid var(--gold-deep);border-radius:var(--radius);
+  padding:20px 16px 18px;text-align:center;position:relative;overflow:hidden;transition:transform .15s,box-shadow .2s}
+.spot:hover{transform:translateY(-3px);box-shadow:0 8px 26px rgba(0,0,0,.45),0 0 20px rgba(227,185,79,.15)}
+.spot .bignum{position:absolute;right:8px;top:2px;font-family:var(--disp);font-weight:800;font-size:64px;color:rgba(227,185,79,.10);line-height:1;pointer-events:none}
+.spot .flagchip{position:absolute;left:12px;top:12px;width:28px;height:19px;object-fit:cover;border-radius:3px;box-shadow:0 2px 8px rgba(0,0,0,.5)}
+.ava{width:92px;height:92px;border-radius:50%;margin:0 auto;position:relative;background:#2A2210;border:2px solid var(--gold-deep);
+  box-shadow:0 0 0 3px rgba(227,185,79,.12),0 0 18px rgba(227,185,79,.18);
+  display:flex;align-items:center;justify-content:center}
+.ava .init{font-family:var(--disp);font-weight:800;font-size:30px;color:var(--gold);letter-spacing:.02em}
+.spot .jchip{display:inline-flex;align-items:center;gap:6px;margin-top:12px;font-family:var(--disp);font-weight:700;font-size:12px;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+.spot .jchip .no{color:var(--gold);font-size:15px}
+.spot .pname{margin-top:4px;font-family:var(--disp);font-weight:800;font-size:21px;text-transform:uppercase;line-height:1.1}
+.spot .pname a{color:var(--chalk);border-bottom:1px dotted var(--gold-deep)}
+.spot .pname a:hover{color:var(--gold);text-decoration:none}
+.spot .pteam{font-size:12px;color:var(--dim);margin-top:7px}
+@media (max-width:820px){.spot-strip{grid-template-columns:repeat(2,1fr)}}
 
 /* ---------- fixture cards ---------- */
 .fx-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:16px}
@@ -339,6 +358,14 @@ a.dgn{color:var(--gold);font-weight:600}
 <div class="live-zone" id="livezone" aria-live="polite"></div>
 
 <div class="hero" id="hero"></div>
+
+<section id="pitch-stars" style="display:none">
+  <div class="sec-head">
+    <h2>Stars on the <em>Pitch</em></h2>
+    <div class="note" id="stars-note">the headline names in the featured match</div>
+  </div>
+  <div class="spot-strip" id="starstrip"></div>
+</section>
 
 <a class="promo" href="https://enterdungeon.cc" target="_blank" rel="noopener">
   <span class="promo-glyph">⚔</span>
@@ -820,7 +847,65 @@ function renderHero(){
     </div>
     ${heroLive||scored?'':'<div class="count" id="count" aria-label="countdown to kickoff"></div>'}
     ${pick.stars?`<div class="hero-stars">${pick.stars}</div>`:''}`;
+  renderPitchStars(hName, aName, heroLive, scored);
   tickCountdown();
+}
+
+/* ---------- stars on the pitch ---------- */
+const STARS = {
+  canada:      [{n:"Alphonso Davies",pos:"LB",no:19},{n:"Jonathan David",pos:"FW"}],
+  morocco:     [{n:"Achraf Hakimi",pos:"RB",no:2},{n:"Brahim Díaz",pos:"MF"}],
+  paraguay:    [{n:"Julio Enciso",pos:"FW"},{n:"Miguel Almirón",pos:"MF"}],
+  france:      [{n:"Kylian Mbappé",pos:"FW",no:10},{n:"Ousmane Dembélé",pos:"FW"}],
+  brazil:      [{n:"Vinícius Júnior",pos:"FW",no:7},{n:"Raphinha",pos:"FW"}],
+  norway:      [{n:"Erling Haaland",pos:"FW",no:9},{n:"Martin Ødegaard",pos:"MF",no:10}],
+  mexico:      [{n:"Santiago Giménez",pos:"FW"},{n:"Edson Álvarez",pos:"MF"}],
+  england:     [{n:"Harry Kane",pos:"FW",no:9},{n:"Jude Bellingham",pos:"MF",no:10}],
+  spain:       [{n:"Lamine Yamal",pos:"FW"},{n:"Pedri",pos:"MF"}],
+  portugal:    [{n:"Cristiano Ronaldo",pos:"FW",no:7},{n:"Bruno Fernandes",pos:"MF",no:8}],
+  usa:         [{n:"Christian Pulisic",pos:"FW",no:10},{n:"Weston McKennie",pos:"MF",no:8}],
+  belgium:     [{n:"Jérémy Doku",pos:"FW"},{n:"Romelu Lukaku",pos:"FW"}],
+  argentina:   [{n:"Lionel Messi",pos:"FW",no:10},{n:"Julián Álvarez",pos:"FW",no:9}],
+  egypt:       [{n:"Mohamed Salah",pos:"FW",no:10},{n:"Omar Marmoush",pos:"FW"}],
+  switzerland: [{n:"Granit Xhaka",pos:"MF",no:10},{n:"Breel Embolo",pos:"FW"}],
+  colombia:    [{n:"Luis Díaz",pos:"FW",no:7},{n:"James Rodríguez",pos:"MF",no:10}],
+  ghana:       [{n:"Mohammed Kudus",pos:"MF"},{n:"Antoine Semenyo",pos:"FW"}]
+};
+const wikiSearch = n => 'https://en.wikipedia.org/w/index.php?search=' + encodeURIComponent(n + ' footballer');
+const starInitials = n => n.split(/\s+/).map(w => w[0]).slice(0,2).join('').toUpperCase();
+
+function teamEntryByName(name){
+  const lo = (name || '').toLowerCase();
+  for (const k in DATA.teams){
+    const t = DATA.teams[k];
+    if (t.canon === lo || (t.name || '').toLowerCase() === lo) return t;
+  }
+  return null;
+}
+
+function renderPitchStars(hName, aName, live, scored){
+  const sec = $('pitch-stars');
+  const both = [hName, aName].map(nm => ({ nm, t: teamEntryByName(nm), list: STARS[(nm||'').toLowerCase()] || (teamEntryByName(nm) ? STARS[teamEntryByName(nm).canon] : null) }));
+  const cards = [];
+  both.forEach(side => {
+    (side.list || []).forEach(p => cards.push({ ...p, team: side.nm, flag: side.t ? side.t.flag : null }));
+  });
+  if (!cards.length){ sec.style.display = 'none'; return; }
+  sec.style.display = '';
+  $('stars-note').textContent = live
+    ? 'on the pitch right now — ' + hName + ' vs ' + aName
+    : scored
+      ? 'the names that decided ' + hName + ' vs ' + aName
+      : 'the headline names — ' + hName + ' vs ' + aName;
+  $('starstrip').innerHTML = cards.map(p => `
+    <div class="spot">
+      ${p.flag ? `<img class="flagchip" src="${FLAG(p.flag)}" alt="${p.team} flag">` : ''}
+      ${p.no ? `<div class="bignum">${p.no}</div>` : ''}
+      <div class="ava"><span class="init">${starInitials(p.n)}</span></div>
+      <div class="jchip">${p.no ? `<span class="no">#${p.no}</span> ·` : ''} ${p.pos}</div>
+      <div class="pname"><a href="${wikiSearch(p.n)}" target="_blank" rel="noopener">${p.n}</a></div>
+      <div class="pteam">${p.team}</div>
+    </div>`).join('');
 }
 function tickCountdown(){
   const el = $('count');

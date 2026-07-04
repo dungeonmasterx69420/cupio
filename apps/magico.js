@@ -73,6 +73,8 @@ function normRoster(j) {
   const flat = [];
   groups.forEach(g => {
     (g.items || []).forEach(a => {
+      const link = (a.links || []).find(l => (l.rel || []).includes('playercard'))
+                || (a.links || [])[0];
       flat.push({
         name: a.fullName || a.displayName,
         jersey: a.jersey || null,
@@ -83,7 +85,8 @@ function normRoster(j) {
         exp: a.experience && a.experience.years != null ? a.experience.years : null,
         college: (a.college && a.college.name) || '',
         injured: !!(a.injuries && a.injuries.length),
-        headshot: (a.headshot && a.headshot.href) || null
+        headshot: (a.headshot && a.headshot.href) || null,
+        profile: link ? link.href : null
       });
     });
   });
