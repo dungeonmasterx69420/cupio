@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0E0C09">
+<title>CSIO — Counter-Strike Tier 1 Live · A Dungeon Production</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230E0C09'/%3E%3Cg stroke='%23E39A3B' fill='none' stroke-width='5' stroke-linecap='round'%3E%3Ccircle cx='50' cy='50' r='26'/%3E%3Cline x1='50' y1='8' x2='50' y2='32'/%3E%3Cline x1='50' y1='68' x2='50' y2='92'/%3E%3Cline x1='8' y1='50' x2='32' y2='50'/%3E%3Cline x1='68' y1='50' x2='92' y2='50'/%3E%3C/g%3E%3Ccircle cx='50' cy='50' r='5' fill='%23E39A3B'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700;800&family=Archivo:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
+<style>
+/* ================================================================
+   CSIO — smoke-and-muzzle-flash dark theme (T-side orange)
+================================================================ */
+:root{
+  --site:#0E0C09; --panel:#171310; --panel-2:#12100C;
+  --line:#3A2E1E; --line-soft:#292115;
+  --chalk:#F2EDE5; --dim:#AE9F8A; --faint:#7A6E5C;
+  --orange:#E39A3B; --orange-deep:#B5762A; --ct:#5B9BD9; --live:#E4574C;
+  --gold:#E3B94F;
+  --radius:10px;
+  --disp:'Saira Condensed',sans-serif;
+  --body:'Archivo',sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+body{background:var(--site);color:var(--chalk);font-family:var(--body);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(1000px 460px at 30% -10%, rgba(227,154,59,.05), transparent 60%),
+    repeating-linear-gradient(90deg,transparent 0 140px,rgba(255,255,255,.012) 140px 280px)}
+a{color:var(--orange);text-decoration:none}
+a:hover{text-decoration:underline}
+a:focus-visible,button:focus-visible{outline:2px solid var(--orange);outline-offset:2px;border-radius:4px}
+img{display:block}
+.wrap{max-width:1240px;margin:0 auto;padding:0 22px;position:relative;z-index:1}
+
+/* ---------- ticker ---------- */
+.ticker{background:#0A0806;border-bottom:1px solid var(--line-soft);overflow:hidden;white-space:nowrap;position:relative}
+.ticker-label{position:absolute;left:0;top:0;bottom:0;z-index:2;display:flex;align-items:center;gap:8px;padding:0 14px;
+  background:#0A0806;border-right:1px solid var(--line);
+  font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.14em;color:var(--orange)}
+.ticker-track{display:inline-flex;padding:9px 0;animation:tick 75s linear infinite;will-change:transform}
+.ticker:hover .ticker-track{animation-play-state:paused}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.tick-item{display:inline-flex;align-items:center;gap:7px;padding:0 22px;font-size:13px;color:var(--dim);border-right:1px solid var(--line-soft)}
+.tick-item b{color:var(--chalk);font-weight:600}
+.tick-score{color:var(--orange);font-family:var(--disp);font-weight:700}
+
+/* ---------- header ---------- */
+header{padding:30px 0 10px}
+.masthead{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.brand-eyebrow{display:inline-block;font-family:var(--disp);font-weight:600;font-size:13px;letter-spacing:.3em;
+  color:var(--gold);text-transform:uppercase;margin-bottom:10px}
+.brand-eyebrow:hover{color:#F3D27A;text-decoration:none}
+.logo-row{display:flex;align-items:center;gap:18px}
+.logo-mark{width:60px;height:60px;flex:none}
+.csio-word{font-family:'Press Start 2P',monospace;font-weight:400;font-size:clamp(28px,5vw,52px);line-height:1;
+  letter-spacing:.06em;margin:0;-webkit-font-smoothing:none;
+  background:linear-gradient(180deg,#F2C078,#C7802B);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 0 14px rgba(227,154,59,.35))}
+.logo-sub{font-family:var(--disp);font-weight:600;font-size:13px;letter-spacing:.24em;
+  color:var(--dim);text-transform:uppercase;margin-top:8px}
+.stage-chip{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:999px;padding:8px 16px;
+  font-family:var(--disp);font-size:15px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--chalk);background:var(--panel)}
+.stage-chip .dot{width:8px;height:8px;border-radius:50%;background:var(--orange);box-shadow:0 0 8px var(--orange)}
+.stage-chip.live .dot{background:var(--live);box-shadow:0 0 8px var(--live);animation:pulse 1.4s infinite}
+@keyframes pulse{50%{opacity:.35}}
+
+/* ---------- sections ---------- */
+section{padding:34px 0 6px}
+.sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:18px;border-bottom:1px solid var(--line-soft);padding-bottom:10px}
+.sec-head h2{font-family:var(--disp);font-weight:700;font-size:28px;letter-spacing:.06em;text-transform:uppercase}
+.sec-head h2 em{font-style:normal;color:var(--orange)}
+.sec-head .note{font-size:13px;color:var(--faint)}
+
+/* ---------- LIVE zone ---------- */
+#livezone{display:none}
+#livezone.on{display:block}
+.live-list{display:grid;gap:12px}
+.live-card{border:1px solid #4a2723;border-radius:var(--radius);background:linear-gradient(165deg,#1B0F0D,#12100C);
+  display:grid;grid-template-columns:auto 1fr auto;gap:16px;align-items:center;padding:16px 20px}
+.live-badge{font-family:var(--disp);font-weight:800;letter-spacing:.18em;font-size:13px;color:var(--live);
+  display:flex;align-items:center;gap:8px;text-transform:uppercase}
+.live-badge .dot{width:9px;height:9px;border-radius:50%;background:var(--live);box-shadow:0 0 10px var(--live);animation:pulse 1.4s infinite}
+.live-mid{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
+.live-mid .tn{font-family:var(--disp);font-weight:800;font-size:clamp(18px,2.6vw,28px);text-transform:uppercase}
+.live-mid .sc{font-family:var(--disp);font-weight:800;font-size:clamp(24px,3vw,34px);color:var(--live)}
+.live-mid .ev{width:100%;text-align:center;font-size:12.5px;color:var(--faint)}
+.btn-live{display:inline-block;background:var(--live);color:#fff;font-family:var(--disp);font-weight:800;letter-spacing:.12em;
+  text-transform:uppercase;font-size:14px;padding:10px 20px;border-radius:6px;white-space:nowrap}
+.btn-live:hover{background:#c9463c;text-decoration:none}
+
+/* ---------- s1mple spotlight ---------- */
+.goat{border:1px solid var(--orange-deep);border-radius:var(--radius);overflow:hidden;
+  background:linear-gradient(155deg,#20160B,#12100C)}
+.goat-top{display:flex;align-items:center;gap:10px;padding:12px 20px;border-bottom:1px solid var(--line);
+  font-family:var(--disp);font-weight:800;letter-spacing:.2em;font-size:14px;color:var(--orange);text-transform:uppercase}
+.goat-body{display:grid;grid-template-columns:1.3fr 1fr;gap:24px;padding:22px 22px 24px}
+.goat-name{font-family:var(--disp);font-weight:800;font-size:clamp(30px,4.4vw,48px);text-transform:uppercase;line-height:1}
+.goat-name a{color:var(--chalk);border-bottom:2px dotted var(--orange-deep)}
+.goat-name a:hover{color:var(--orange);text-decoration:none}
+.goat-sub{font-size:14px;color:var(--dim);margin-top:8px}
+.goat-roster{margin-top:14px;font-size:13.5px;color:var(--dim);border-left:2px solid var(--orange-deep);padding-left:12px}
+.goat-roster b{color:var(--chalk)}
+.goat-next{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px 18px}
+.goat-next .lbl{font-family:var(--disp);font-weight:700;font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+.goat-next .match{font-family:var(--disp);font-weight:800;font-size:24px;text-transform:uppercase;margin-top:6px;line-height:1.15}
+.goat-next .when{font-size:13px;color:var(--dim);margin-top:6px}
+.goat-count{display:flex;gap:10px;margin-top:14px}
+.goat-count .cell{text-align:center;background:var(--panel-2);border:1px solid var(--line);border-radius:6px;padding:8px 12px;min-width:62px}
+.goat-count .num{font-family:var(--disp);font-weight:800;font-size:24px;line-height:1;color:var(--orange)}
+.goat-count .lb{font-size:10px;letter-spacing:.16em;color:var(--faint);text-transform:uppercase;margin-top:4px}
+.goat-watch{display:inline-block;margin-top:14px;background:var(--orange);color:#1B120A;font-family:var(--disp);font-weight:800;
+  letter-spacing:.1em;text-transform:uppercase;font-size:14px;padding:10px 20px;border-radius:6px}
+.goat-watch:hover{background:#f0b25e;text-decoration:none}
+.goat-watch.off{background:transparent;color:var(--dim);border:1px solid var(--line);cursor:default}
+
+/* ---------- match board (HLTV-style rows) ---------- */
+.day-head{font-family:var(--disp);font-weight:700;font-size:15px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);
+  margin:20px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--line-soft)}
+.mrow{display:grid;grid-template-columns:64px 1fr auto 1fr minmax(140px,220px) 60px 92px;gap:12px;align-items:center;
+  background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 14px;margin-bottom:8px}
+.mrow:hover{border-color:var(--orange-deep)}
+.mrow.bcg{border-color:var(--orange-deep);background:linear-gradient(155deg,#1D150C,#171310)}
+.mrow .time{font-family:var(--disp);font-weight:700;font-size:16px;color:var(--dim)}
+.mrow .t{display:flex;align-items:center;gap:8px;min-width:0}
+.mrow .t img{width:22px;height:22px;object-fit:contain}
+.mrow .t .n{font-family:var(--disp);font-weight:700;font-size:18px;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mrow .t.right{justify-content:flex-end;text-align:right}
+.mrow .vs{font-family:var(--disp);font-weight:700;font-size:15px;color:var(--faint);text-align:center;min-width:56px}
+.mrow .vs.scored{color:var(--chalk);font-size:20px}
+.mrow .vs.live-sc{color:var(--live);font-size:20px}
+.mrow .ev{font-size:12.5px;color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mrow .tier{font-size:12px;color:var(--gold);letter-spacing:.1em;text-align:center}
+.mrow .act{text-align:right}
+.btn-w{display:inline-block;font-family:var(--disp);font-weight:700;font-size:12px;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--orange-deep);color:var(--orange);padding:5px 12px;border-radius:5px}
+.btn-w:hover{background:var(--orange);color:#1B120A;text-decoration:none}
+.btn-w.red{border-color:var(--live);color:var(--live)}
+.btn-w.red:hover{background:var(--live);color:#fff}
+.board-note{background:var(--panel-2);border:1px dashed var(--line);border-radius:var(--radius);padding:18px 20px;color:var(--dim);font-size:14px;margin-bottom:8px}
+.board-note b{color:var(--chalk)}
+
+/* ---------- event calendar ---------- */
+.ev-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+.ecard{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;display:flex;flex-direction:column}
+.ecard.major{border-color:var(--gold);background:linear-gradient(160deg,#1E1808,#12100C)}
+.ecard .dates{font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.14em;color:var(--orange);text-transform:uppercase}
+.ecard.major .dates{color:var(--gold)}
+.ecard h3{font-family:var(--disp);font-weight:800;font-size:21px;text-transform:uppercase;margin-top:4px;line-height:1.15}
+.ecard .loc{font-size:13px;color:var(--dim);margin-top:6px}
+.ecard .pp{font-size:12.5px;color:var(--faint);margin-top:2px}
+.ecard .foot{margin-top:auto;padding-top:12px}
+.ecard .major-tag{display:inline-block;font-family:var(--disp);font-weight:800;font-size:11px;letter-spacing:.18em;color:#1B120A;
+  background:var(--gold);border-radius:4px;padding:2px 8px;margin-bottom:6px;text-transform:uppercase}
+
+/* ---------- results strip ---------- */
+.res-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px}
+.res{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+.res .ev{font-size:12px;color:var(--faint);margin-bottom:8px;display:flex;justify-content:space-between}
+.res .rw{display:flex;justify-content:space-between;padding:2px 0}
+.res .rw .n{font-family:var(--disp);font-weight:700;font-size:17px;text-transform:uppercase}
+.res .rw .n.win{color:var(--orange)}
+.res .rw .s{font-family:var(--disp);font-weight:800;font-size:18px}
+
+/* ---------- dungeon strip / footer ---------- */
+.dstrip{margin:44px 0 0;border:1px solid #3d4c28;border-radius:var(--radius);
+  background:linear-gradient(150deg,#141a0e,#12100C);padding:26px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.dstrip h3{font-family:var(--disp);font-weight:800;font-size:clamp(20px,3vw,30px);text-transform:uppercase;letter-spacing:.04em}
+.dstrip h3 em{font-style:normal;color:var(--gold)}
+.dstrip p{color:var(--dim);font-size:14px;margin-top:6px;max-width:60ch}
+.btn-d{display:inline-block;background:var(--gold);color:#141a0e;font-family:var(--disp);font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;font-size:15px;padding:12px 24px;border-radius:6px;white-space:nowrap}
+.btn-d:hover{background:#f0ca66;text-decoration:none}
+footer{margin-top:40px;border-top:1px solid var(--line-soft);padding:22px 0 34px;font-size:12.5px;color:var(--faint);
+  display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+footer a{color:var(--dim)}
+#src-chip{font-family:var(--disp);letter-spacing:.08em;text-transform:uppercase}
+
+@media (max-width:900px){
+  .goat-body{grid-template-columns:1fr}
+  .mrow{grid-template-columns:52px 1fr auto 1fr;grid-template-rows:auto auto}
+  .mrow .ev{grid-column:1/4;grid-row:2}
+  .mrow .tier{display:none}
+  .mrow .act{grid-column:4;grid-row:2}
+  .csio-word{font-size:24px}
+  .logo-mark{width:46px;height:46px}
+  .masthead{align-items:flex-start;flex-direction:column}
+  .live-card{grid-template-columns:1fr;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ ticker ============ -->
+<div class="ticker" aria-label="Counter-Strike headlines">
+  <div class="ticker-label"><span>✛</span> SCENE WIRE</div>
+  <div class="ticker-track" id="ticker"></div>
+</div>
+
+<!-- ============ header ============ -->
+<header class="wrap">
+  <a class="brand-eyebrow" href="https://enterdungeon.cc" target="_blank" rel="noopener">⚔ A Dungeon Production</a>
+  <div class="masthead">
+    <div class="logo-row">
+      <svg class="logo-mark" viewBox="0 0 100 100" role="img" aria-label="Csio crosshair mark">
+        <defs>
+          <filter id="cglow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="2.6" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <linearGradient id="corange" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#F2C078"/><stop offset="1" stop-color="#C7802B"/>
+          </linearGradient>
+        </defs>
+        <g filter="url(#cglow)" stroke="url(#corange)" fill="none" stroke-width="4" stroke-linecap="round">
+          <circle cx="50" cy="50" r="27"/>
+          <line x1="50" y1="8" x2="50" y2="33"/>
+          <line x1="50" y1="67" x2="50" y2="92"/>
+          <line x1="8" y1="50" x2="33" y2="50"/>
+          <line x1="67" y1="50" x2="92" y2="50"/>
+          <circle cx="50" cy="50" r="4.5" fill="url(#corange)" stroke="none"/>
+        </g>
+      </svg>
+      <div class="logo-text">
+        <h1 class="csio-word">CSIO</h1>
+        <div class="logo-sub">Counter-Strike Tier 1 · Match Control Room</div>
+      </div>
+    </div>
+    <div class="stage-chip" id="chip"><span class="dot" aria-hidden="true"></span> <span id="chiptext">Player break · circuit resumes Jul 20</span></div>
+  </div>
+</header>
+
+<!-- ============ LIVE zone ============ -->
+<section id="livezone" class="wrap">
+  <div class="sec-head"><h2>Live <em>Now</em></h2><div class="note">tier 1 matches in play</div></div>
+  <div class="live-list" id="livelist"></div>
+</section>
+
+<!-- ============ s1mple spotlight ============ -->
+<section class="wrap">
+  <div class="goat">
+    <div class="goat-top"><span>⭑</span> GOAT WATCH — S1MPLE TRACKER</div>
+    <div class="goat-body">
+      <div>
+        <div class="goat-name"><a href="https://www.hltv.org/player/7998/s1mple" target="_blank" rel="noopener">s1mple</a></div>
+        <div class="goat-sub">Oleksandr Kostyliev · AWP · <a href="https://www.hltv.org/team/12878/bcgame" target="_blank" rel="noopener">BC.Game Esports</a> · VRS ≈ #44</div>
+        <div class="goat-roster" id="goat-roster">
+          <b>Current lineup:</b> s1mple · electroNic · Magisk <span style="color:var(--faint)">(IGL, signed Jun 30)</span> · Senzu <span style="color:var(--faint)">(permanent Jun 23)</span> · fifth spot open — the SAW core has been benched and the summer rebuild is in full swing.
+        </div>
+        <div class="goat-roster" style="margin-top:10px">
+          <b>State of play:</b> BC.Game missed the Cologne Major after sliding down the VRS, so the road back runs through the fall circuit — BLAST Bounty qualifiers and the grind toward the Singapore Major.
+        </div>
+      </div>
+      <div class="goat-next">
+        <div class="lbl" id="gn-lbl">Next match</div>
+        <div class="match" id="gn-match">None scheduled yet</div>
+        <div class="when" id="gn-when">Roster rebuilding during the player break — this card updates automatically the moment a BC.Game match hits the schedule.</div>
+        <div class="goat-count" id="gn-count" style="display:none">
+          <div class="cell"><div class="num" id="gc-d">–</div><div class="lb">Days</div></div>
+          <div class="cell"><div class="num" id="gc-h">–</div><div class="lb">Hrs</div></div>
+          <div class="cell"><div class="num" id="gc-m">–</div><div class="lb">Min</div></div>
+        </div>
+        <a class="goat-watch off" id="gn-watch" href="https://www.hltv.org/team/12878/bcgame" target="_blank" rel="noopener">No stream yet — track on HLTV</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ match board ============ -->
+<section class="wrap">
+  <div class="sec-head"><h2>Match <em>Board</em></h2><div class="note" id="board-note-inline">tier 1 (S/A) + all BC.Game matches</div></div>
+  <div class="board-note" id="board-note"><b>Player break.</b> The post-Major pause is on — tier-1 play resumes <b>July 20</b> with the BLAST Bounty Season 2 qualifiers. The board fills automatically as matches are scheduled; the Cologne Major playoff results are below in the meantime.</div>
+  <div id="board"></div>
+</section>
+
+<!-- ============ recent results ============ -->
+<section class="wrap">
+  <div class="sec-head"><h2>Recent <em>Results</em></h2><div class="note" id="res-note">IEM Cologne Major 2026 · playoffs</div></div>
+  <div class="res-grid" id="results"></div>
+</section>
+
+<!-- ============ event calendar ============ -->
+<section class="wrap">
+  <div class="sec-head"><h2>Tier 1 <em>Calendar</em></h2><div class="note">second half of 2026</div></div>
+  <div class="ev-grid" id="events"></div>
+</section>
+
+<!-- ============ dungeon strip ============ -->
+<div class="wrap">
+  <div class="dstrip">
+    <div>
+      <h3>Every match. One place. <em>The Dungeon.</em></h3>
+      <p>Private, invite-only streaming — the Majors, the qualifiers, and everything in between, all under one roof. Request access and never miss a pistol round.</p>
+    </div>
+    <a class="btn-d" href="https://enterdungeon.cc" target="_blank" rel="noopener">⚔ Request Access</a>
+  </div>
+</div>
+
+<footer class="wrap">
+  <div>CSIO · an unofficial Counter-Strike fan dashboard · <a href="https://enterdungeon.cc" target="_blank" rel="noopener">A Dungeon Production</a></div>
+  <div id="src-chip">source: snapshot</div>
+</footer>
+
+<script>
+/* ================================================================
+   CSIO client — polls /api/cs every 60s, snapshot fallback baked in
+================================================================ */
+const $ = id => document.getElementById(id);
+
+/* ---------- seeded snapshot (as of July 4, 2026) ---------- */
+const SNAPSHOT = {
+  ticker: [
+    ['Jun 21','Falcons win the Cologne Major — 3–0 over FURIA in the grand final'],
+    ['Jun 21','m0NESY claims his first Major MVP'],
+    ['Jun 30','BC.Game sign Magisk as in-game leader'],
+    ['Jun 23','BC.Game make Senzu signing permanent'],
+    ['Jul 1','jL departs Natus Vincere'],
+    ['Jul 20','Circuit resumes: BLAST Bounty Season 2 qualifiers'],
+    ['Aug 12','Esports World Cup — $2M in Riyadh, 32 teams'],
+    ['Nov 25','PGL Singapore Major — the first Major in Southeast Asia']
+  ],
+  results: [
+    {ev:'Cologne Major · Grand Final', d:'Jun 21', rows:[['Falcons',3,true],['FURIA',0,false]]},
+    {ev:'Cologne Major · Semifinal', d:'Jun 20', rows:[['Falcons',2,true],['Spirit',1,false]]},
+    {ev:'Cologne Major · Semifinal', d:'Jun 20', rows:[['FURIA',2,true],['Aurora',0,false]]},
+    {ev:'Cologne Major · Quarterfinal', d:'Jun 19', rows:[['Falcons',2,true],['Vitality',1,false]]},
+    {ev:'Cologne Major · Quarterfinal', d:'Jun 19', rows:[['FURIA',2,true],['9z',1,false]]}
+  ],
+  events: [
+    {dates:'Jul 20 – Aug 2', name:'BLAST Bounty Season 2', loc:'Online (EU) → Finals in Malta', pp:'$1,150,000', watch:'https://www.twitch.tv/blastpremier'},
+    {dates:'Aug 12 – 23', name:'Esports World Cup 2026', loc:'Riyadh, Saudi Arabia · 32 teams', pp:'$2,000,000 — biggest pool of the year', watch:'https://www.twitch.tv/esportsworldcup'},
+    {dates:'Aug 24 – Sep 6', name:'BLAST Open Season 2', loc:'Copenhagen, DK & Porto, PT', pp:'≈$1,100,000', watch:'https://www.twitch.tv/blastpremier'},
+    {dates:'Sep 7 – 13', name:'FISSURE Playground 5', loc:'Shenzhen, China', pp:'$1,000,000'},
+    {dates:'Sep 17 – 20', name:'StarLadder StarSeries', loc:'Europe · venue TBA', pp:'$500,000'},
+    {dates:'Oct 3 – 11', name:'ESL Pro League S24', loc:'Katowice, Poland', pp:'$1,000,000', watch:'https://www.twitch.tv/esl_csgo'},
+    {dates:'Oct 14 – 18', name:'Thunderpick World Championship', loc:'Malta', pp:'$1,000,000'},
+    {dates:'Oct 24 – 31', name:'PGL Masters Bucharest', loc:'Bucharest, Romania', pp:'$1,250,000', watch:'https://www.twitch.tv/pgl'},
+    {dates:'Nov 2 – 8', name:'IEM Beijing 2026', loc:'Beijing, China', pp:'$1,000,000', watch:'https://www.twitch.tv/esl_csgo'},
+    {dates:'Nov 9 – 15', name:'BLAST Rivals Season 2', loc:'Hong Kong', pp:'$1,000,000', watch:'https://www.twitch.tv/blastpremier'},
+    {dates:'Nov 25 – Dec 13', name:'PGL Singapore Major', loc:'Singapore Indoor Stadium · 32 teams', pp:'$1,250,000', watch:'https://www.twitch.tv/pgl', major:true}
+  ]
+};
+
+/* ---------- ticker ---------- */
+(function(){
+  const half = SNAPSHOT.ticker.map(([d,t]) =>
+    `<span class="tick-item"><span class="tick-score">${d}</span> <b>${t}</b></span>`).join('');
+  $('ticker').innerHTML = half + half;
+})();
+
+/* ---------- event calendar (static seed) ---------- */
+(function(){
+  $('events').innerHTML = SNAPSHOT.events.map(e => `
+    <div class="ecard${e.major ? ' major' : ''}">
+      ${e.major ? '<span class="major-tag">Valve Major</span>' : ''}
+      <div class="dates">${e.dates}</div>
+      <h3>${e.name}</h3>
+      <div class="loc">${e.loc}</div>
+      <div class="pp">${e.pp}</div>
+      <div class="foot">${e.watch ? `<a class="btn-w" href="${e.watch}" target="_blank" rel="noopener">Watch channel</a>` : ''}</div>
+    </div>`).join('');
+})();
+
+/* ---------- results ---------- */
+function renderResultsSnapshot(){
+  $('results').innerHTML = SNAPSHOT.results.map(r => `
+    <div class="res">
+      <div class="ev"><span>${r.ev}</span><span>${r.d}</span></div>
+      ${r.rows.map(([n,s,w]) => `<div class="rw"><span class="n ${w?'win':''}">${n}</span><span class="s">${s}</span></div>`).join('')}
+    </div>`).join('');
+}
+function renderResultsLive(list){
+  if (!list || !list.length) return;
+  $('results').innerHTML = list.slice(0, 9).map(m => `
+    <div class="res">
+      <div class="ev"><span>${m.event}</span><span>${fmtDate(m.begin_at)}</span></div>
+      ${m.teams.map(t => {
+        const other = m.teams.find(x => x !== t);
+        const w = t.score != null && other && other.score != null && t.score > other.score;
+        return `<div class="rw"><span class="n ${w?'win':''}">${t.name}</span><span class="s">${t.score != null ? t.score : ''}</span></div>`;
+      }).join('')}
+    </div>`).join('');
+  $('res-note').textContent = 'live from the feed';
+}
+
+/* ---------- match board ---------- */
+const fmtDate = iso => new Date(iso).toLocaleDateString([], {weekday:'short', month:'short', day:'numeric'});
+const fmtTime = iso => new Date(iso).toLocaleTimeString([], {hour:'numeric', minute:'2-digit'});
+const isBcgM = m => m.teams.some(t => /bc[\.\s]?game/i.test(t.name) || /bcg/i.test(t.acronym||''));
+const stars = tier => tier === 's' ? '★★★' : tier === 'a' ? '★★' : '★';
+
+function matchRow(m){
+  const bcg = isBcgM(m);
+  const live = m.status === 'LIVE';
+  const scored = live || m.status === 'FINISHED';
+  const mid = scored
+    ? `<span class="vs ${live?'live-sc':'scored'}">${m.teams[0].score ?? 0} : ${m.teams[1].score ?? 0}</span>`
+    : `<span class="vs">vs${m.bo ? ' · BO'+m.bo : ''}</span>`;
+  const team = (t, right) => `
+    <div class="t ${right?'right':''}">
+      ${!right && t.logo ? `<img src="${t.logo}" alt="" loading="lazy">` : ''}
+      <span class="n">${t.name}</span>
+      ${right && t.logo ? `<img src="${t.logo}" alt="" loading="lazy">` : ''}
+    </div>`;
+  const act = m.stream
+    ? `<a class="btn-w ${live?'red':''}" href="${m.stream}" target="_blank" rel="noopener">${live?'▶ Live':'Watch'}</a>`
+    : '';
+  return `
+  <div class="mrow ${bcg?'bcg':''}">
+    <div class="time">${live ? 'LIVE' : fmtTime(m.begin_at)}</div>
+    ${team(m.teams[0], false)}
+    ${mid}
+    ${team(m.teams[1], true)}
+    <div class="ev">${m.event}${bcg ? ' · ⭑ s1mple' : ''}</div>
+    <div class="tier">${stars(m.tier)}</div>
+    <div class="act">${act}</div>
+  </div>`;
+}
+
+function renderBoard(upcoming, live){
+  const all = [...(live||[]), ...(upcoming||[])];
+  if (!all.length) return;
+  $('board-note').style.display = 'none';
+  // group by day
+  const groups = {};
+  all.forEach(m => {
+    const k = m.status === 'LIVE' ? 'LIVE NOW' : fmtDate(m.begin_at);
+    (groups[k] = groups[k] || []).push(m);
+  });
+  $('board').innerHTML = Object.entries(groups).map(([day, ms]) =>
+    `<div class="day-head">${day}</div>` + ms.map(matchRow).join('')
+  ).join('');
+}
+
+/* ---------- live zone ---------- */
+function renderLive(list){
+  const zone = $('livezone');
+  if (!list || !list.length){ zone.classList.remove('on'); return; }
+  zone.classList.add('on');
+  $('livelist').innerHTML = list.map(m => `
+    <div class="live-card">
+      <div class="live-badge"><span class="dot"></span> LIVE${m.bo ? ' · BO'+m.bo : ''}</div>
+      <div class="live-mid">
+        <span class="tn">${m.teams[0].name}</span>
+        <span class="sc">${m.teams[0].score ?? 0} : ${m.teams[1].score ?? 0}</span>
+        <span class="tn">${m.teams[1].name}</span>
+        <span class="ev">${m.event}${isBcgM(m) ? ' · ⭑ s1mple is playing' : ''}</span>
+      </div>
+      <div>${m.stream ? `<a class="btn-live" href="${m.stream}" target="_blank" rel="noopener">▶ Watch</a>`
+                       : `<a class="btn-live" href="https://enterdungeon.cc" target="_blank" rel="noopener">⚔ Dungeon</a>`}</div>
+    </div>`).join('');
+  $('chiptext').textContent = list.length + (list.length === 1 ? ' match live' : ' matches live');
+  $('chip').classList.add('live');
+}
+
+/* ---------- s1mple card ---------- */
+let goatTarget = null;
+function renderGoat(s){
+  if (!s) return;
+  const m = s.live || s.next;
+  if (!m){ return; }
+  const opp = m.teams.find(t => !(/bc[\.\s]?game/i.test(t.name))) || m.teams[1];
+  if (s.live){
+    $('gn-lbl').textContent = 'LIVE NOW';
+    $('gn-match').textContent = 'BC.Game vs ' + opp.name;
+    $('gn-when').textContent = m.event + ' — ' + (m.teams[0].score ?? 0) + ':' + (m.teams[1].score ?? 0);
+    $('gn-count').style.display = 'none';
+    goatTarget = null;
+  } else {
+    $('gn-lbl').textContent = 'Next match';
+    $('gn-match').textContent = 'BC.Game vs ' + opp.name;
+    $('gn-when').textContent = m.event + ' · ' + new Date(m.begin_at).toLocaleString([], {weekday:'long', month:'short', day:'numeric', hour:'numeric', minute:'2-digit'}) + (m.bo ? ' · BO' + m.bo : '');
+    $('gn-count').style.display = 'flex';
+    goatTarget = new Date(m.begin_at);
+    tickGoat();
+  }
+  const w = $('gn-watch');
+  if (m.stream){
+    w.classList.remove('off');
+    w.href = m.stream;
+    w.textContent = s.live ? '▶ Watch s1mple live' : '▶ Stream link ready';
+  } else {
+    w.classList.add('off');
+    w.href = 'https://www.hltv.org/team/12878/bcgame';
+    w.textContent = 'Stream TBA — track on HLTV';
+  }
+}
+function tickGoat(){
+  if (!goatTarget) return;
+  const ms = goatTarget - Date.now();
+  if (ms <= 0) return;
+  $('gc-d').textContent = Math.floor(ms / 864e5);
+  $('gc-h').textContent = Math.floor(ms % 864e5 / 36e5);
+  $('gc-m').textContent = Math.floor(ms % 36e5 / 6e4);
+}
+setInterval(tickGoat, 30 * 1000);
+
+/* ---------- poll loop ---------- */
+async function refresh(){
+  try{
+    const r = await fetch('/api/cs', {cache:'no-store'});
+    const j = await r.json();
+    if (j.source === 'none') throw new Error('no provider');
+    renderLive(j.live);
+    renderBoard(j.upcoming, j.live);
+    renderResultsLive(j.results);
+    renderGoat(j.s1mple);
+    $('src-chip').textContent = 'source: ' + j.source + (j.stale ? ' (stale)' : '') + ' · updated ' + new Date(j.fetchedAt).toLocaleTimeString([], {hour:'numeric', minute:'2-digit'});
+  }catch(e){
+    $('src-chip').textContent = 'source: snapshot (feed unavailable)';
+  }
+}
+
+renderResultsSnapshot();
+refresh();
+setInterval(refresh, 60 * 1000);
+</script>
+</body>
+</html>
