@@ -36,7 +36,7 @@ async function fromFootballData() {
       m.status === 'IN_PLAY' || m.status === 'PAUSED' ? 'LIVE'
       : m.status === 'FINISHED' ? 'FINISHED'
       : 'SCHEDULED',
-    minute: null,
+    minute: m.minute != null ? String(m.minute) : null,
     home: {
       name: (m.homeTeam && m.homeTeam.name) || '',
       score: m.score && m.score.fullTime ? m.score.fullTime.home : null,
