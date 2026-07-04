@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0B1310">
 <title>WC26 — Knockout Control Room</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏆</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -178,9 +179,96 @@ footer{margin-top:40px;border-top:1px solid var(--line);padding:22px 0 40px;colo
 .feed-status .fdot.on{background:#5BC97C;box-shadow:0 0 6px #5BC97C}
 .feed-status .fdot.err{background:var(--live)}
 
+/* ---------- player links & Dungeon CTA ---------- */
+.plink{color:var(--chalk);font-weight:600;border-bottom:1px dotted var(--gold-deep);padding:2px 0;display:inline-block}
+.plink:hover{color:var(--gold);text-decoration:none}
+.pdot{color:var(--faint);padding:0 2px}
+a.dgn{color:var(--gold);font-weight:600}
+.promo{
+  display:flex;align-items:center;gap:12px;margin-top:14px;
+  border:1px solid var(--gold-deep);border-radius:var(--radius);
+  background:linear-gradient(90deg,rgba(227,185,79,.08),rgba(227,185,79,.02));
+  padding:12px 16px;font-size:13.5px;color:var(--dim);
+}
+.promo:hover{text-decoration:none;background:linear-gradient(90deg,rgba(227,185,79,.14),rgba(227,185,79,.04))}
+.promo b{color:var(--gold)}
+.promo-glyph{font-size:18px}
+.promo-arrow{margin-left:auto;color:var(--gold);font-size:16px}
+
+/* ---------- LIVE NOW zone ---------- */
+.live-zone{display:none;margin-top:18px}
+.live-zone.on{display:block}
+.lz-head{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.lz-badge{display:inline-flex;align-items:center;gap:8px;background:var(--live);color:#fff;
+  font-family:var(--disp);font-weight:800;font-size:15px;letter-spacing:.18em;border-radius:6px;padding:4px 14px}
+.lz-badge .b-dot{width:8px;height:8px;background:#fff;border-radius:50%;animation:pulse 1.2s ease-in-out infinite}
+.lz-note{color:var(--dim);font-size:13px}
+.lv-card{border:1px solid var(--live);border-radius:var(--radius);
+  background:linear-gradient(160deg,#1B100E 0%,#0C1511 55%);
+  box-shadow:0 0 26px rgba(228,87,76,.14);
+  padding:20px 22px 18px;margin-bottom:14px;position:relative;overflow:hidden}
+.lv-card::after{content:"";position:absolute;right:-140px;top:50%;transform:translateY(-50%);
+  width:380px;height:380px;border:2px solid rgba(228,87,76,.06);border-radius:50%}
+.lv-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
+  color:var(--dim);font-size:13px;letter-spacing:.08em;text-transform:uppercase;font-family:var(--disp);font-weight:600}
+.lv-min{color:var(--live);font-weight:800;font-size:16px;letter-spacing:.06em}
+.lv-main{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;margin:16px 0 8px;position:relative;z-index:1}
+.lv-side{display:flex;align-items:center;gap:12px;min-width:0}
+.lv-side.right{justify-content:flex-end;text-align:right;flex-direction:row-reverse}
+.lv-side img{width:52px;height:36px;object-fit:cover;border-radius:4px;box-shadow:0 3px 12px rgba(0,0,0,.5);flex:none}
+.lv-side .nm{font-family:var(--disp);font-weight:800;font-size:clamp(22px,3.6vw,40px);text-transform:uppercase;line-height:1}
+.lv-score{font-family:var(--disp);font-weight:800;font-size:clamp(40px,6vw,64px);color:var(--chalk);white-space:nowrap;line-height:1}
+.lv-score .pn{display:block;font-size:13px;color:var(--faint);text-align:center;font-weight:600;letter-spacing:.06em}
+.lv-phase{text-align:center;color:var(--dim);font-size:13.5px;margin-bottom:10px}
+.lv-phase b{color:var(--chalk)}
+.lv-bar{height:6px;border-radius:3px;background:var(--line-soft);overflow:hidden;margin:0 auto 14px;max-width:520px}
+.lv-bar span{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--live));transition:width 1s linear}
+.lv-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font-size:13px;color:var(--dim)}
+.lv-foot b{color:var(--chalk)}
+.lv-cta{display:inline-flex;align-items:center;gap:8px;background:var(--live);color:#fff;
+  font-family:var(--disp);font-weight:700;font-size:15px;letter-spacing:.1em;text-transform:uppercase;
+  border-radius:7px;padding:9px 18px}
+.lv-cta:hover{text-decoration:none;filter:brightness(1.12)}
+
+/* ---------- mobile ---------- */
 @media(max-width:700px){
-  .bracket{grid-template-columns:repeat(4,220px)}
-  .count .cell{min-width:60px}
+  .wrap{padding:0 14px}
+  header{padding:24px 0 8px}
+  section{padding:26px 0 4px}
+  .sec-head h2{font-size:22px}
+  .hero{padding:18px 16px 16px}
+  .hero-teams{gap:14px;row-gap:6px}
+  .hero-team{gap:10px}
+  .hero-team img{width:44px;height:31px}
+  .hero-meta{gap:8px;flex-direction:column}
+  .count{gap:8px}
+  .count .cell{min-width:0;flex:1}
+  .count .num{font-size:26px}
+  .fx-grid,.team-grid,.results,.venue-grid{grid-template-columns:1fr}
+  .fx-body{padding:14px 14px 12px}
+  .fx-links{gap:10px;flex-wrap:wrap}
+  .fx-links a{padding:6px 0}          /* bigger tap targets */
+  .tm .tlink,.plink{padding:4px 0}
+  .bracket{grid-template-columns:repeat(4,230px);scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+  .bracket .col{scroll-snap-align:start}
+  .promo{flex-wrap:wrap;font-size:13px}
+  .src-links{flex-direction:column;gap:10px}
+  .ticker-label{position:static;border-right:none;padding:8px 14px 0}
+  .ticker-label span{font-size:11px}
+}
+@media(max-width:380px){
+  .hero-team .nm{font-size:26px}
+  .fx-team .tn{font-size:19px}
+}
+@media(max-width:600px){
+  .lv-card{padding:16px 14px 14px}
+  .lv-main{gap:8px}
+  .lv-side{flex-direction:column;align-items:flex-start;gap:6px}
+  .lv-side.right{align-items:flex-end}
+  .lv-side img{width:36px;height:25px}
+  .lv-side .nm{font-size:19px}
+  .lv-foot{flex-direction:column;align-items:stretch;text-align:center}
+  .lv-cta{justify-content:center}
 }
 </style>
 </head>
@@ -207,12 +295,21 @@ footer{margin-top:40px;border-top:1px solid var(--line);padding:22px 0 40px;colo
   </p>
 </header>
 
+<!-- LIVE NOW — appears automatically when a match is in play -->
+<div class="live-zone" id="livezone" aria-live="polite"></div>
+
 <div class="hero" id="hero"></div>
+
+<a class="promo" href="https://enterdungeon.cc" target="_blank" rel="noopener">
+  <span class="promo-glyph">⚔</span>
+  <span class="promo-text"><b>Every match. One place. The Dungeon.</b> Private, invite-only streaming — request access at enterdungeon.cc</span>
+  <span class="promo-arrow">→</span>
+</a>
 
 <section id="fixtures">
   <div class="sec-head">
     <h2>Round of 16 <em>Fixtures</em></h2>
-    <span class="note">US TV: FOX (English) / Telemundo (Spanish)</span>
+    <span class="note">Every match streaming on <a href="https://enterdungeon.cc" target="_blank" rel="noopener">The Dungeon ⚔</a></span>
   </div>
   <div class="fx-grid" id="fxgrid"></div>
 </section>
@@ -255,7 +352,7 @@ footer{margin-top:40px;border-top:1px solid var(--line);padding:22px 0 40px;colo
     <a href="https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026" target="_blank" rel="noopener">FIFA official hub ↗</a>
     <a href="https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/articles/knockout-stage-match-schedule-bracket" target="_blank" rel="noopener">FIFA live bracket ↗</a>
     <a href="https://www.espn.com/soccer/story/_/id/48939282/2026-fifa-world-cup-fixtures-results-match-schedule-group-stage-knockout-rounds-bracket" target="_blank" rel="noopener">ESPN scores &amp; schedule ↗</a>
-    <a href="https://www.foxsports.com/soccer/fifa-world-cup" target="_blank" rel="noopener">FOX Sports (US broadcast) ↗</a>
+    <a class="dgn" href="https://enterdungeon.cc" target="_blank" rel="noopener">⚔ Enter The Dungeon ↗</a>
   </div>
   <div>Editorial content (storylines, star players, venues) is curated in the <code>DATA</code> object in this file — snapshot July 3, 2026. Live scores, statuses and bracket progression come from the <code>/api/matches</code> feed. Flags by flagcdn.com.</div>
 </footer>
@@ -401,6 +498,35 @@ const fmtLocal = iso => {
   };
 };
 const gLink = (a,b)=>`https://www.google.com/search?q=${encodeURIComponent(a+' vs '+b+' world cup 2026')}`;
+const pSearch = name => `https://www.google.com/search?q=${encodeURIComponent(name.trim()+' footballer')}`;
+/* turn a "Name · Name · Name" string into individually-searchable links */
+const linkPlayers = str => str.split('·').map(n=>{
+  const nm = n.trim();
+  return `<a class="plink" href="${pSearch(nm)}" target="_blank" rel="noopener">${nm}</a>`;
+}).join('<span class="pdot"> · </span>');
+const DUNGEON = 'https://enterdungeon.cc';
+
+/* ---- live match clock helpers ---- */
+const parseMin = str => {
+  const m = String(str||'').match(/\d+/);
+  return m ? parseInt(m[0],10) : null;
+};
+/* estimate minutes played from kickoff time (used when the feed gives no clock) */
+const estMinute = iso => {
+  let el = (Date.now() - new Date(iso).getTime()) / 60000;
+  if (el < 0) return 0;
+  if (el > 120) el -= 20;      // halftime + ET break
+  else if (el > 60) el -= 15;  // halftime
+  return Math.min(Math.round(el), 125);
+};
+const phaseInfo = mins => {
+  if (mins == null) return { label:'In play', left:'' };
+  if (mins < 45)   return { label:'1st half',   left:`≈${45-mins}' to halftime` };
+  if (mins <= 47)  return { label:'Around halftime', left:'' };
+  if (mins <= 90)  return { label:'2nd half',   left:`≈${90-mins}' + stoppage left in regulation` };
+  if (mins <= 105) return { label:'Extra time · 1st period', left:`≈${105-mins}' in the period` };
+  return { label:'Extra time · 2nd period', left:'penalties loom' };
+};
 
 /* ---- name canonicalization: API team names → our team codes ---- */
 const ALIASES = {
@@ -513,6 +639,69 @@ function mergeLive(payload){
 }
 
 /* ================================================================ renderers */
+/* gather everything currently in play, across all rounds */
+function collectLive(){
+  const out = [];
+  DATA.r16.forEach(f=>{
+    if (f.live && f.live.status==='LIVE'){
+      const h = T(f.home), a = f.away ? T(f.away) : null;
+      out.push({ tag:`Round of 16 · Match ${f.m}`, iso:f.iso, venue:f.venue, city:f.city, stars:f.stars,
+        hName:h.name, hFlag:h.flag, aName:a?a.name:f.awayLabel, aFlag:a?a.flag:null,
+        hs:f.live.hs, as:f.live.as, hp:f.live.hp, ap:f.live.ap, minute:f.live.minute });
+    }
+  });
+  [[LIVE.qf,'Quarterfinal'],[LIVE.sf,'Semifinal'],[LIVE.finals,'THE FINAL']].forEach(([arr,tag])=>arr.forEach(m=>{
+    if (m.status!=='LIVE') return;
+    const hi = m.home.code ? T(m.home.code) : null, ai = m.away.code ? T(m.away.code) : null;
+    out.push({ tag, iso:m.date, venue:m.venue||'', city:'', stars:'',
+      hName:hi?hi.name:m.home.name, hFlag:hi?hi.flag:null,
+      aName:ai?ai.name:m.away.name, aFlag:ai?ai.flag:null,
+      hs:m.home.score, as:m.away.score, hp:m.home.pens, ap:m.away.pens, minute:m.minute });
+  }));
+  return out;
+}
+
+function renderLiveNow(){
+  const zone = $('livezone');
+  const live = collectLive();
+  if (!live.length){ zone.className='live-zone'; zone.innerHTML=''; return; }
+  const cards = live.map(x=>{
+    const fed = parseMin(x.minute);
+    const mins = fed ?? estMinute(x.iso);
+    const est = fed == null;
+    const ph = phaseInfo(mins);
+    const prog = Math.min(mins/90*100, 100);
+    const pens = (x.hp!=null && x.ap!=null) ? `<span class="pn">pens ${x.hp}–${x.ap}</span>` : '';
+    return `
+    <div class="lv-card">
+      <div class="lv-top">
+        <span>${x.tag}${x.venue?` · ${x.venue}${x.city?`, ${x.city.split(',')[0]}`:''}`:''}</span>
+        <span class="lv-min">● ${mins}'${est?' (est.)':''}</span>
+      </div>
+      <div class="lv-main">
+        <div class="lv-side">${x.hFlag?`<img src="${FLAG(x.hFlag)}" alt="${x.hName} flag">`:''}<span class="nm">${x.hName}</span></div>
+        <div class="lv-score">${x.hs??0}–${x.as??0}${pens}</div>
+        <div class="lv-side right">${x.aFlag?`<img src="${FLAG(x.aFlag)}" alt="${x.aName} flag">`:''}<span class="nm">${x.aName}</span></div>
+      </div>
+      <div class="lv-phase"><b>${ph.label}</b>${ph.left?` — ${ph.left}`:''}${est?' · clock estimated from kickoff':''}</div>
+      <div class="lv-bar"><span style="width:${prog}%"></span></div>
+      <div class="lv-foot">
+        <span>${x.stars||'Winner advances — loser goes home.'}</span>
+        <a class="lv-cta" href="${DUNGEON}" target="_blank" rel="noopener">⚔ Watch live on The Dungeon</a>
+      </div>
+    </div>`;
+  }).join('');
+  zone.className = 'live-zone on';
+  zone.innerHTML = `
+    <div class="lz-head">
+      <span class="lz-badge"><span class="b-dot"></span>LIVE NOW</span>
+      <span class="lz-note">${live.length>1?live.length+' matches':'Match'} in play — score and clock refresh automatically</span>
+    </div>${cards}`;
+}
+/* keep the estimated clock moving between feed polls */
+setInterval(()=>{ if (collectLive().length) renderLiveNow(); }, 20 * 1000);
+
+
 function renderTicker(){
   const items = DATA.r32.map(r=>`
     <span class="tick-item">
@@ -553,10 +742,12 @@ let heroTarget = null, heroLive = false;
 function renderHero(){
   const cands = heroCandidates();
   const now = Date.now();
-  let pick = cands.find(c => c.live && c.live.status==='LIVE');
+  const featured = collectLive().length > 0; // live matches are showcased above
+  let pick = featured ? null : cands.find(c => c.live && c.live.status==='LIVE');
   heroLive = !!pick;
   if (!pick) pick = cands
-    .filter(c => new Date(c.iso).getTime() > now - 3*3600*1000 && !(c.live && c.live.status==='FINISHED'))
+    .filter(c => new Date(c.iso).getTime() > now - 3*3600*1000
+      && !(c.live && (c.live.status==='FINISHED' || (featured && c.live.status==='LIVE'))))
     .sort((x,y)=>new Date(x.iso)-new Date(y.iso))[0] || cands[cands.length-1];
 
   const hInfo = pick.h.code ? T(pick.h.code) : null;
@@ -585,7 +776,7 @@ function renderHero(){
     <div class="hero-meta">
       ${pick.venue?`<span>📍 <b>${pick.venue}</b>${pick.city?` — ${pick.city}`:''}${pick.cap?` (cap. ${pick.cap})`:''}</span>`:''}
       <span>🗓 <b>${w.day}</b> · ${w.time} your time</span>
-      <span>📺 FOX / Telemundo (US)</span>
+      <span>📺 <a class="dgn" href="${DUNGEON}" target="_blank" rel="noopener">Streaming on The Dungeon ⚔</a></span>
     </div>
     ${heroLive||scored?'':'<div class="count" id="count" aria-label="countdown to kickoff"></div>'}
     ${pick.stars?`<div class="hero-stars">${pick.stars}</div>`:''}`;
@@ -609,7 +800,9 @@ function tickCountdown(){
 setInterval(tickCountdown, 1000);
 
 function renderFixtures(){
-  $('fxgrid').innerHTML = DATA.r16.map(f=>{
+  const order = f => (f.live && f.live.status==='LIVE') ? 0 : (f.live && f.live.status==='FINISHED') ? 2 : 1;
+  const sorted = [...DATA.r16].sort((a,b)=> order(a)-order(b) || new Date(a.iso)-new Date(b.iso));
+  $('fxgrid').innerHTML = sorted.map(f=>{
     const h = T(f.home), a = f.away ? T(f.away) : null;
     const w = fmtLocal(f.iso);
     const awayName = a ? a.name : f.awayLabel;
@@ -640,11 +833,11 @@ function renderFixtures(){
         <div class="fx-stars">${f.stars}</div>
         <div class="fx-venue">
           <span>📍 <b>${f.venue}</b> — ${f.city}</span>
-          <span>Capacity ${f.cap} · TV: FOX / Telemundo (US)</span>
+          <span>Capacity ${f.cap}</span>
         </div>
         <div class="fx-links">
-          <a href="${gLink(h.name, awayName)}" target="_blank" rel="noopener">Match center ↗</a>
-          <a href="https://www.fifa.com/en/tournaments/mens/worldcup/canadamexicousa2026/scores-fixtures" target="_blank" rel="noopener">FIFA match hub ↗</a>
+          <a href="${gLink(h.name, awayName)}" target="_blank" rel="noopener">Live score ↗</a>
+          <a class="dgn" href="${DUNGEON}" target="_blank" rel="noopener">⚔ Watch on The Dungeon</a>
         </div>
       </div>
     </article>`;
@@ -711,7 +904,7 @@ function renderTeams(){
       </div>
       <span class="tm-rec">${t.rec}</span>
       <p>${t.story}</p>
-      <div class="stars"><span class="lb">Watch for</span><b>${t.stars}</b></div>
+      <div class="stars"><span class="lb">Watch for</span>${linkPlayers(t.stars)}</div>
       <div class="tm-next">Next: <b>${t.next}</b></div>
       <a class="tlink" href="https://www.google.com/search?q=${encodeURIComponent(t.name+' world cup 2026 squad news')}" target="_blank" rel="noopener">Latest team news ↗</a>
     </article>`).join('');
@@ -748,6 +941,12 @@ function renderFeedStatus(ok){
 }
 
 function renderAll(){
+  renderLiveNow();
+  const nLive = collectLive().length;
+  const chip = $('stagechip');
+  if (chip) chip.textContent = nLive
+    ? `LIVE NOW · ${nLive} match${nLive>1?'es':''} in play`
+    : 'Round of 16 · Jul 4–7';
   renderTicker(); renderHero(); renderFixtures(); renderBracket(); renderResults();
 }
 
