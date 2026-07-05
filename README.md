@@ -18,16 +18,9 @@ Path escape hatches also exist from any hostname: `/magico/`, `/cupio/` and `/cs
 | `/api/health` | CUPIO | cache age |
 | `/api/magic` | MAGICO | ESPN public NBA API — **keyless** |
 | `/healthz` | MAGICO | liveness |
-| `/api/cs` | CSIO | PandaScore (free key → `PANDASCORE_TOKEN`) — tier S/A matches + **all BC.Game matches** (the s1mple tracker) |
-| `/api/cs/health` | CSIO | provider + cache status |
 
 Each API module keeps its own independent cache (60s live / 5 min idle / stale-serve on failure). CUPIO's code is extracted unchanged from wc26-dashboard v2.3.1; MAGICO's from magico-dashboard v1.0.0.
 
-## CSIO notes
-
-- HLTV has no public API, so live data comes from **PandaScore** — grab a free key at pandascore.co and set `PANDASCORE_TOKEN` on the Render service. Without it, CSIO runs on its built-in snapshot (seeded July 4, 2026: Cologne Major results, tier-1 calendar through the Singapore Major, s1mple/BC.Game roster state).
-- Tier filter: matches from S/A-tier series pass; **BC.Game matches always pass regardless of tier** so the s1mple tracker keeps working while they grind qualifiers. Tune with `CS_TIERS` (default `s,a`) and `CS_TEAM_REGEX` (default `bc[\.\s]?game`) — if s1mple transfers, one env var change repoints the tracker, no redeploy of code.
-- The GOAT WATCH card shows his next match with a countdown and a stream link the moment one is scheduled; watch buttons on the match board come from each match's stream list (usually Twitch).
 
 ## Deploying over the existing cupio service
 
