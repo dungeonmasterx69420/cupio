@@ -1,4 +1,4 @@
-# Dungeon Dashboards — CUPIO + MAGICO + CSIO on one Render service
+# Dungeon Dashboards — CUPIO + MAGICO on one Render service
 
 Three dashboards, one process, one Render slot. Host-based routing decides which frontend is served; both APIs are always mounted.
 
