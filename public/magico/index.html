@@ -325,7 +325,7 @@ footer a{color:var(--dim)}
     <div class="move"><div class="kind">Coaching</div><h3>Sean Sweeney hired</h3><p>Ex-Spurs assistant and defensive specialist replaces Jamahl Mosley, who was dismissed after the first-round collapse against Detroit.</p></div>
     <div class="move"><div class="kind out">Waived</div><h3>Jonathan Isaac</h3><p>Waived July 4, saving roughly $6.5M. Ends an injury-marred eight-year run in Orlando.</p></div>
     <div class="move"><div class="kind">Draft</div><h3>Izaiyah Nelson · #46</h3><p>Orlando's lone pick in the 2026 draft, added on a second-round scale deal to a young frontcourt pipeline.</p></div>
-    <div class="move"><div class="kind fa">Free Agents</div><h3>Four pending</h3><p>Moritz Wagner, Jett Howard and Jevon Carter unrestricted; Colin Castleton restricted. Backup center is the open question.</p></div>
+    <div class="move"><div class="kind fa">Free Agency</div><h3>Vučević returns</h3><p>The franchise icon is back in pinstripes for a second act, answering the backup-center question. Jevon Carter also re-signed; Moritz Wagner was not retained.</p></div>
   </div>
 </section>
 
@@ -364,18 +364,23 @@ const gs = n => 'https://www.google.com/search?q=' + encodeURIComponent(n + ' Or
 /* ---------- seeded snapshot (as of July 4, 2026) ---------- */
 const SNAPSHOT = {
   roster: [
-    {name:'Paolo Banchero', jersey:'5', pos:'PF', core:true,  line:'22.2 pts · 8.4 reb · 5.2 ast in ’25–26 — career-high 45.9 FG%', tag:'Franchise'},
-    {name:'Franz Wagner', jersey:'22', pos:'SF', core:true,  line:'Team-leading ≈23 ppg before a late-season calf injury', tag:'Co-star'},
-    {name:'Desmond Bane', jersey:'3', pos:'SG', core:true,  line:'≈19 pts · 4.5 ast · 56% TS — the shotmaker Orlando traded for', tag:'Sniper'},
-    {name:'Jalen Suggs', jersey:'4', pos:'PG', core:true,  line:'≈15 ppg · point-of-attack menace on the league’s 11th defense', tag:'Defense'},
-    {name:'Wendell Carter Jr.', jersey:'34', pos:'C', line:'≈12 ppg anchor in the middle · $18.1M in 2026–27', tag:'Starter'},
-    {name:'Anthony Black', jersey:'0', pos:'G', line:'≈13 ppg in a breakout third year off the bench', tag:'Rising'},
-    {name:'Goga Bitadze', jersey:'35', pos:'C', line:'Backup five entering the final year of his deal', tag:'Depth'},
-    {name:'Tristan da Silva', jersey:'23', pos:'F', line:'Spot starter whenever the stars sat — steady two-way wing', tag:'Depth'},
-    {name:'Jase Richardson', pos:'G', line:'2025 first-rounder (#25) · second-year guard', tag:'Rising'},
-    {name:'Noah Penda', pos:'F', line:'2025 second-rounder (#32) · French forward, year two', tag:'Rising'},
-    {name:'Jamal Cain', pos:'F', line:'$2.6M team option · energy wing', tag:'Depth'},
-    {name:'Izaiyah Nelson', pos:'C', line:'2026 draft pick, #46 overall · second-round scale deal', tag:'Rookie', rk:true}
+    {name:'Paolo Banchero', jersey:'5', pos:'PF', core:true, headshot:'https://a.espncdn.com/i/headshots/nba/players/full/4432573.png', profile:'https://www.espn.com/nba/player/_/id/4432573/paolo-banchero', line:'22.2 pts · 8.4 reb · 5.2 ast in ’25–26 — career-high 45.9 FG%', tag:'Franchise'},
+    {name:'Franz Wagner', jersey:'22', pos:'SF', core:true, headshot:'https://a.espncdn.com/i/headshots/nba/players/full/4566434.png', profile:'https://www.espn.com/nba/player/_/id/4566434/franz-wagner', line:'Team-leading ≈23 ppg before a late-season calf injury', tag:'Co-star'},
+    {name:'Desmond Bane', jersey:'3', pos:'SG', core:true, headshot:'https://a.espncdn.com/i/headshots/nba/players/full/4066320.png', profile:'https://www.espn.com/nba/player/_/id/4066320/desmond-bane', line:'≈19 pts · 4.5 ast · 56% TS — the shotmaker Orlando traded for', tag:'Sniper'},
+    {name:'Jalen Suggs', jersey:'4', pos:'PG', core:true, headshot:'https://a.espncdn.com/i/headshots/nba/players/full/4432165.png', profile:'https://www.espn.com/nba/player/_/id/4432165/jalen-suggs', line:'≈15 ppg · point-of-attack menace on the league’s 11th defense', tag:'Defense'},
+    {name:'Wendell Carter Jr.', jersey:'34', pos:'C', headshot:'https://a.espncdn.com/i/headshots/nba/players/full/4277847.png', profile:'https://www.espn.com/nba/player/_/id/4277847/wendell-carter-jr', line:'≈12 ppg anchor who outplayed Duren in the Detroit series', tag:'Starter'},
+    {name:'Nikola Vucevic', pos:'C', headshot:'https://a.espncdn.com/i/headshots/nba/players/full/6478.png', profile:'https://www.espn.com/nba/player/_/id/6478/nikola-vucevic', line:'Franchise icon returns — re-signed in July 2026 free agency', tag:'Returned'},
+    {name:'Anthony Black', jersey:'0', pos:'G', headshot:'https://a.espncdn.com/i/headshots/nba/players/full/4712849.png', profile:'https://www.espn.com/nba/player/_/id/4712849/anthony-black', line:'≈13 ppg in a breakout third year off the bench', tag:'Rising'},
+    {name:'Goga Bitadze', jersey:'35', pos:'C', headshot:'https://a.espncdn.com/i/headshots/nba/players/full/4348700.png', profile:'https://www.espn.com/nba/player/_/id/4348700/goga-bitadze', line:'Backup five entering the final year of his deal', tag:'Depth'},
+    {name:'Tristan da Silva', jersey:'23', pos:'F', headshot:'https://a.espncdn.com/i/headshots/nba/players/full/4702382.png', profile:'https://www.espn.com/nba/player/_/id/4702382/tristan-da-silva', line:'Spot starter whenever the stars sat — steady two-way wing', tag:'Depth'},
+    {name:'Jase Richardson', jersey:'11', pos:'G', headshot:'https://a.espncdn.com/i/headshots/nba/players/full/5239561.png', profile:'https://www.espn.com/nba/player/_/id/5239561/jase-richardson', line:'2025 first-rounder (#25) · second-year guard', tag:'Rising'},
+    {name:'Noah Penda', jersey:'93', pos:'F', headshot:'https://a.espncdn.com/i/headshots/nba/players/full/5214637.png', profile:'https://www.espn.com/nba/player/_/id/5214637/noah-penda', line:'2025 second-rounder (#32) · French forward, year two', tag:'Rising'},
+    {name:'Jett Howard', jersey:'13', pos:'G', headshot:'https://a.espncdn.com/i/headshots/nba/players/full/5105806.png', profile:'https://www.espn.com/nba/player/_/id/5105806/jett-howard', line:'Retained for 2026–27 · floor-spacing wing', tag:'Depth'},
+    {name:'Jevon Carter', jersey:'2', pos:'G', headshot:'https://a.espncdn.com/i/headshots/nba/players/full/3133635.png', profile:'https://www.espn.com/nba/player/_/id/3133635/jevon-carter', line:'Re-signed on a vet deal · backcourt pest', tag:'Returned'},
+    {name:'Colin Castleton', jersey:'14', pos:'C', headshot:'https://a.espncdn.com/i/headshots/nba/players/full/4397204.png', profile:'https://www.espn.com/nba/player/_/id/4397204/colin-castleton', line:'Frontcourt depth retained through restricted free agency', tag:'Depth'},
+    {name:'Jamal Cain', jersey:'8', pos:'F', headshot:'https://a.espncdn.com/i/headshots/nba/players/full/4278572.png', profile:'https://www.espn.com/nba/player/_/id/4278572/jamal-cain', line:'Energy wing back for another year', tag:'Depth'},
+    {name:'Alex Morales', jersey:'30', pos:'G', headshot:'https://a.espncdn.com/i/headshots/nba/players/full/4593034.png', profile:'https://www.espn.com/nba/player/_/id/4593034/alex-morales', line:'Summer addition fighting for a rotation spot', tag:'New'},
+    {name:'Izaiyah Nelson', pos:'C', headshot:'https://a.espncdn.com/i/headshots/nba/players/full/5107251.png', profile:'https://www.espn.com/nba/player/_/id/5107251/izaiyah-nelson', line:'2026 draft pick, #46 overall · second-round scale deal', tag:'Rookie', rk:true}
   ],
   results: [
     {d:'May 4',  comp:'Playoffs · Gm 7', a:'Magic', as:94,  h:'Pistons', hs:116, win:false, v:'Little Caesars Arena'},
@@ -385,7 +390,9 @@ const SNAPSHOT = {
     {d:'Apr 12', comp:'Reg. season finale', a:'Magic', as:0, h:'—', hs:0, win:true, v:'45–37 · 8th in the East', note:'Record locked'}
   ],
   ticker: [
+    ['Jul 3','Nikola Vučević returns to Orlando in free agency'],
     ['Jul 4','Jonathan Isaac waived — saves ≈$6.5M'],
+    ['Jul 2','Jevon Carter re-signed on a vet deal'],
     ['Jun 30','Free agency opens: Moe Wagner, Howard, Carter unrestricted'],
     ['Jun 24','Draft: Izaiyah Nelson selected #46 overall'],
     ['Jun 10','Sean Sweeney named head coach'],
@@ -414,19 +421,19 @@ function avatar(p, sm){
 const xFind = n => 'https://x.com/search?q=' + encodeURIComponent('"' + n + '"') + '&f=user';
 const igFind = n => 'https://www.google.com/search?q=' + encodeURIComponent(n + ' Instagram');
 const LINEUP = [
-  { key:'suggs',    name:'Jalen Suggs',        jersey:'4',  pos:'PG',
+  { key:'suggs', shot:'https://a.espncdn.com/i/headshots/nba/players/full/4432165.png', profile:'https://www.espn.com/nba/player/_/id/4432165/jalen-suggs',    name:'Jalen Suggs',        jersey:'4',  pos:'PG',
      stats:[['14.9','PPG'],['ELITE','POA DEF']],
      x:xFind('Jalen Suggs'), ig:igFind('Jalen Suggs') },
-  { key:'bane',     name:'Desmond Bane',       jersey:'3',  pos:'SG',
+  { key:'bane', shot:'https://a.espncdn.com/i/headshots/nba/players/full/4066320.png', profile:'https://www.espn.com/nba/player/_/id/4066320/desmond-bane',     name:'Desmond Bane',       jersey:'3',  pos:'SG',
      stats:[['19.0','PPG'],['4.5','APG'],['4.4','RPG']],
      x:'https://x.com/DBane0625', ig:igFind('Desmond Bane') },
-  { key:'fwagner',  name:'Franz Wagner',       jersey:'22', pos:'SF',
+  { key:'fwagner', shot:'https://a.espncdn.com/i/headshots/nba/players/full/4566434.png', profile:'https://www.espn.com/nba/player/_/id/4566434/franz-wagner',  name:'Franz Wagner',       jersey:'22', pos:'SF',
      stats:[['23.4','PPG'],['TEAM','HIGH']],
      x:xFind('Franz Wagner'), ig:igFind('Franz Wagner') },
-  { key:'banchero', name:'Paolo Banchero',     jersey:'5',  pos:'PF',
+  { key:'banchero', shot:'https://a.espncdn.com/i/headshots/nba/players/full/4432573.png', profile:'https://www.espn.com/nba/player/_/id/4432573/paolo-banchero', name:'Paolo Banchero',     jersey:'5',  pos:'PF',
      stats:[['22.2','PPG'],['8.4','RPG'],['5.2','APG']],
      x:'https://x.com/Pp_doesit', ig:'https://www.instagram.com/pp_doesit' },
-  { key:'carter',   name:'Wendell Carter Jr.', jersey:'34', pos:'C',
+  { key:'carter', shot:'https://a.espncdn.com/i/headshots/nba/players/full/4277847.png', profile:'https://www.espn.com/nba/player/_/id/4277847/wendell-carter-jr',   name:'Wendell Carter Jr.', jersey:'34', pos:'C',
      stats:[['11.7','PPG'],['ANCHOR','PAINT']],
      x:xFind('Wendell Carter Jr'), ig:igFind('Wendell Carter Jr') }
 ];
@@ -435,9 +442,9 @@ let liveRosterByName = {};
 function renderSpotlight(){
   $('spotlight').innerHTML = LINEUP.map(p => {
     const lv = liveRosterByName[p.name.toLowerCase()] || {};
-    const profile = lv.profile || gs(p.name);
+    const profile = lv.profile || p.profile || gs(p.name);
     const jersey = lv.jersey || p.jersey;
-    const shot = lv.headshot || null;
+    const shot = lv.headshot || p.shot || null;
     return `
     <div class="spot">
       <div class="bignum">${jersey}</div>
@@ -462,7 +469,7 @@ function renderRosterSnapshot(){
         ${avatar(p, true)}
         <div>
           <div class="pos">${p.pos}${p.jersey ? ' · #' + p.jersey : ''}</div>
-          <div class="nm"><a href="${gs(p.name)}" target="_blank" rel="noopener">${p.name}</a></div>
+          <div class="nm"><a href="${p.profile || gs(p.name)}" target="_blank" rel="noopener">${p.name}</a></div>
         </div>
       </div>
       <div class="line">${p.line}</div>
