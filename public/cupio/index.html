@@ -201,7 +201,17 @@ section{padding:34px 0 6px}
 .rs .r-note{margin-left:auto;font-size:11px;color:var(--faint);white-space:nowrap}
 
 /* ---------- footer / status ---------- */
+.dstrip{margin:44px 0 0;border:1px solid #3d4c28;border-radius:var(--radius);
+  background:linear-gradient(150deg,#141a0e,#0E1712);padding:26px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.dstrip h3{font-family:var(--disp);font-weight:800;font-size:clamp(20px,3vw,30px);text-transform:uppercase;letter-spacing:.04em}
+.dstrip h3 em{font-style:normal;color:var(--gold)}
+.dstrip p{color:var(--dim);font-size:14px;margin-top:6px;max-width:60ch}
+.btn-d{display:inline-block;background:var(--gold);color:#141a0e;font-family:var(--disp);font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;font-size:15px;padding:12px 24px;border-radius:6px;white-space:nowrap}
+.btn-d:hover{background:#f0ca66;text-decoration:none}
 footer{margin-top:40px;border-top:1px solid var(--line);padding:22px 0 40px;color:var(--faint);font-size:12.5px}
+footer .foot-brand{margin-top:14px;padding-top:12px;border-top:1px solid var(--line-soft)}
+footer .foot-brand a{color:var(--dim)}
 .src-links{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:12px;font-size:13.5px}
 .feed-status{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:999px;padding:4px 12px;margin-bottom:12px;font-size:12px;color:var(--dim)}
 .feed-status .fdot{width:7px;height:7px;border-radius:50%;background:var(--faint)}
@@ -413,6 +423,14 @@ a.dgn{color:var(--gold);font-weight:600}
   <div class="results" id="resgrid"></div>
 </section>
 
+<div class="dstrip">
+  <div>
+    <h3>Every match. One place. <em>The Dungeon.</em></h3>
+    <p>Private, invite-only streaming — the knockouts, the final, and everything in between, all under one roof. Request access and never miss a kickoff.</p>
+  </div>
+  <a class="btn-d" href="https://enterdungeon.cc" target="_blank" rel="noopener">⚔ Request Access</a>
+</div>
+
 <footer>
   <div class="feed-status" id="feedstatus"><span class="fdot"></span><span>Connecting to live feed…</span></div>
   <div class="src-links">
@@ -422,6 +440,7 @@ a.dgn{color:var(--gold);font-weight:600}
     <a class="dgn" href="https://enterdungeon.cc" target="_blank" rel="noopener">⚔ Enter The Dungeon ↗</a>
   </div>
   <div>Editorial content (storylines, star players, venues) is curated in the <code>DATA</code> object in this file — snapshot July 3, 2026. Live scores, statuses and bracket progression come from the <code>/api/matches</code> feed. Flags by flagcdn.com.</div>
+  <div class="foot-brand">CUPIO · an unofficial World Cup 26 fan dashboard · <a href="https://enterdungeon.cc" target="_blank" rel="noopener">A Dungeon Production</a></div>
 </footer>
 
 </div>
