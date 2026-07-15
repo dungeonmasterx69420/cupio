@@ -168,6 +168,9 @@ section{padding:34px 0 6px}
 .res .rw .n{font-family:var(--disp);font-weight:700;font-size:17px;text-transform:uppercase}
 .res .rw .n.win{color:var(--orange)}
 .res .rw .s{font-family:var(--disp);font-weight:800;font-size:18px}
+.res .res-links{display:flex;gap:14px;margin-top:9px;padding-top:8px;border-top:1px solid var(--line-soft)}
+.res .res-links a{font-family:var(--disp);font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.res .res-links a:hover{color:var(--orange);text-decoration:none}
 
 /* ---------- dungeon strip / footer ---------- */
 .dstrip{margin:44px 0 0;border:1px solid #3d4c28;border-radius:var(--radius);
@@ -252,7 +255,7 @@ footer a{color:var(--dim)}
         <div class="goat-name"><a href="https://www.hltv.org/player/7998/s1mple" target="_blank" rel="noopener">s1mple</a></div>
         <div class="goat-sub">Oleksandr Kostyliev · AWP · <a href="https://www.hltv.org/team/12878/bcgame" target="_blank" rel="noopener">BC.Game Esports</a> · VRS ≈ #44</div>
         <div class="goat-roster" id="goat-roster">
-          <b>Current lineup:</b> s1mple · electroNic · Magisk <span style="color:var(--faint)">(IGL, signed Jun 30)</span> · Senzu <span style="color:var(--faint)">(permanent Jun 23)</span> · fifth spot open — the SAW core has been benched and the summer rebuild is in full swing.
+          <b>Current lineup:</b> <a href="https://www.hltv.org/player/7998/s1mple" target="_blank" rel="noopener">s1mple</a> · <a href="https://www.hltv.org/search?query=electronic" target="_blank" rel="noopener">electroNic</a> · <a href="https://www.hltv.org/search?query=magisk" target="_blank" rel="noopener">Magisk</a> <span style="color:var(--faint)">(IGL, signed Jun 30)</span> · <a href="https://www.hltv.org/search?query=senzu" target="_blank" rel="noopener">Senzu</a> <span style="color:var(--faint)">(permanent Jun 23)</span> · fifth spot open — the SAW core has been benched and the summer rebuild is in full swing.
         </div>
         <div class="goat-roster" style="margin-top:10px">
           <b>State of play:</b> BC.Game missed the Cologne Major after sliding down the VRS, so the road back runs through the fall circuit — BLAST Bounty qualifiers and the grind toward the Singapore Major.
@@ -378,15 +381,22 @@ function renderResultsSnapshot(){
 }
 function renderResultsLive(list){
   if (!list || !list.length) return;
-  $('results').innerHTML = list.slice(0, 9).map(m => `
+  $('results').innerHTML = list.slice(0, 9).map(m => {
+    const tw = m.stream && /twitch\.tv\/([^\/?#]+)/i.exec(m.stream);
+    return `
     <div class="res">
-      <div class="ev"><span>${m.event}</span><span>${fmtDate(m.begin_at)}</span></div>
+      <div class="ev"><span>${m.event}</span><span>${fmtDate(m.end_at || m.begin_at)}</span></div>
       ${m.teams.map(t => {
         const other = m.teams.find(x => x !== t);
         const w = t.score != null && other && other.score != null && t.score > other.score;
         return `<div class="rw"><span class="n ${w?'win':''}">${t.name}</span><span class="s">${t.score != null ? t.score : ''}</span></div>`;
       }).join('')}
-    </div>`).join('');
+      <div class="res-links">
+        <a href="https://www.hltv.org/results" target="_blank" rel="noopener">Stats · HLTV</a>
+        ${tw ? `<a href="https://www.twitch.tv/${tw[1]}/videos" target="_blank" rel="noopener">VOD</a>` : ''}
+      </div>
+    </div>`;
+  }).join('');
   $('res-note').textContent = 'live from the feed';
 }
 
