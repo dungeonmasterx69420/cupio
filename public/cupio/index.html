@@ -6,6 +6,8 @@
 <meta name="theme-color" content="#0B1310">
 <title>CUPIO — World Cup 26 Live · A Dungeon Production</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230B1310'/%3E%3Cg stroke='%23E3B94F' fill='none' stroke-width='4' stroke-linejoin='round'%3E%3Cpolygon points='50,8 86,29 86,71 50,92 14,71 14,29'/%3E%3Cpolygon points='50,36 36.4,45.9 41.6,61.9 58.4,61.9 63.6,45.9' fill='%23E3B94F' fill-opacity='.25'/%3E%3Cline x1='50' y1='36' x2='50' y2='8'/%3E%3Cline x1='36.4' y1='45.9' x2='14' y2='38'/%3E%3Cline x1='63.6' y1='45.9' x2='86' y2='38'/%3E%3Cline x1='41.6' y1='61.9' x2='31' y2='81'/%3E%3Cline x1='58.4' y1='61.9' x2='69' y2='81'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700;800&family=Archivo:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -1112,6 +1114,11 @@ async function poll(){
 }
 poll();
 setInterval(poll, 60 * 1000);
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js'));
+}
 </script>
 </body>
 </html>

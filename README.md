@@ -10,6 +10,12 @@ Three dashboards, one process, one Render slot. Host-based routing decides which
 
 Path escape hatches also exist from any hostname: `/magico/`, `/cupio/` and `/csio/`.
 
+All three dashboards are **PWAs** (same treatment as YARDIO) — installable to the home
+screen, with an offline-capable app shell and last-loaded data served from cache when the
+network drops. Each app ships its own `manifest.webmanifest`, `sw.js` (network-first for
+navigations and `/api/*`, cache-first for fonts and cross-origin images) and icon set,
+scoped per hostname.
+
 ## Routes
 
 | Route | App | Notes |

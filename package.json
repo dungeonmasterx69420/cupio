@@ -1,6 +1,6 @@
 {
   "name": "dungeon-dashboards",
-  "version": "3.2.4",
+  "version": "3.3.0",
   "description": "CUPIO + MAGICO on one Render service — A Dungeon Production",
   "main": "server.js",
   "scripts": {
