@@ -8,7 +8,7 @@
    Bump VERSION to invalidate all caches on the next visit. */
 'use strict';
 
-const VERSION = 'v1';
+const VERSION = 'v2';
 const PREFIX = 'cupio';
 /* Resolve the shell relative to the SW so host-based ("/") and path-based
    ("/cupio/") serving both work. */
